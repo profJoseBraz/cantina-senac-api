@@ -1,0 +1,60 @@
+create table categoria(
+	id int primary key not null auto_increment,
+	nome varchar(45)
+)
+
+create table restricao(
+	id int primary key not null auto_increment,
+	nome varchar(45) not null,
+	descricao varchar(200)
+)
+
+create table forma_pagamento(
+	id int primary key not null auto_increment,
+	nome varchar(45) not null
+)
+
+create table pedido(
+	id int primary key not null auto_increment,
+	id_forma_pagamento int not null,
+	nome_cliente varchar(45) not null,
+	data datetime not null,
+	valor decimal(10,2) not null,
+	foreign key (id_forma_pagamento) references forma_pagamento(id)
+)
+
+create table produto(
+	id int primary key not null auto_increment,
+	id_categoria int not null,
+	nome varchar(45) not null,
+	descricao varchar(200) not null,
+	valor decimal(10,2) not null,
+	imagem varchar(200) not null,
+	foreign key (id_categoria) references categoria(id)
+)
+
+create table itens_pedido(
+	id int primary key not null auto_increment,
+	id_pedido int not null,
+	id_produto int not null,
+	quantidade int not null,
+	foreign key (id_pedido) references pedido(id),
+	foreign key (id_produto) references produto(id)
+)
+
+create table restricao_produto(
+	id int primary key not null auto_increment,
+	id_produto int not null,
+	id_retricao int not null,
+	foreign key (id_produto) references produto(id),
+	foreign key (id_retricao) references restricao(id)
+)
+
+create table producao(
+	id int primary key not null auto_increment,
+	id_produto int not null,
+	data datetime not null,
+	quantidade int not null,
+	observacao varchar(200),
+	foreign key (id_produto) references produto(id)
+)

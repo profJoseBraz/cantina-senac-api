@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import categoryRoutes from './src/routes/categoryRoutes.js';
+import categoryRoutes from './src/routes/CategoryRoutes.js';
 const app = express();
 app.use(express.json());
 const allowedOrigins = ["http://localhost:5173"];

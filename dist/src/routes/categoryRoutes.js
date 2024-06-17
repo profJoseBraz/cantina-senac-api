@@ -8,8 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from 'express';
-import { getCategories } from '../controllers/CategoryController.js';
-import { createNewConnection } from '../database/db.js';
+import { getCategories, getCategoriesById, getCategoriesByName } from '../controllers/CategoryController.js';
+import { createNewConnection } from '../database/Db.js';
 const router = express.Router();
-router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () { return getCategories(req, res, yield createNewConnection()); }));
+router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const query = req.query;
+        if (Object.keys(query).length === 0) {
+            return getCategories(req, res, yield createNewConnection());
+        }
+        if (query.id) {
+            return getCategoriesById(req, res, yield createNewConnection());
+        }
+        else if (query.nome) {
+            return getCategoriesByName(req, res, yield createNewConnection());
+        }
+        throw new Error(`Bad Request`);
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(400).json({ Message: err.message });
+    }
+}));
 export default router;

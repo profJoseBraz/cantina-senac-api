@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const getCategories = (_, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+export const getAllCategories = (_, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sql = `select * from categoria`;
         const [data] = yield dbConn.query(sql);
@@ -48,11 +48,7 @@ export const getCategoriesByName = (req, res, dbConn) => __awaiter(void 0, void 
         const sql = `select * from categoria where nome like ?`;
         const [data] = yield dbConn.query(sql, [`${nome}%`]);
         console.log(data);
-        const id = data.id;
-        const name = data.nome;
-        const category = new Category(id, name);
-        console.log(category);
-        return res.status(200).json(category);
+        return res.status(200).json(data);
     }
     catch (err) {
         console.log(`End point: getCategoriesByName, Erro: ${err}`);

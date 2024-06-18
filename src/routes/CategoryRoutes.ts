@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express';
 import { 
-    getCategories,
+    getAllCategories,
     getCategoriesById,
     getCategoriesByName } from '../controllers/CategoryController.js';
 import { createNewConnection } from '../database/Db.js';
-import { TCategoryQueryParams } from '../types/controllers/CategoryController.types.js';
+import { TCategory } from '../types/model/Category.js';
 
 const router = express.Router();
 
@@ -12,10 +12,10 @@ router.get(
     "/", 
     async (req: Request, res: Response) => {
         try{
-            const query : TCategoryQueryParams = req.query as any as TCategoryQueryParams;
+            const query : TCategory = req.query as any;
             
             if(Object.keys(query).length === 0){
-                return getCategories(req, res, await createNewConnection())
+                return getAllCategories(req, res, await createNewConnection())
             }
 
             if(query.id){

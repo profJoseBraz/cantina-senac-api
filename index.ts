@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import categoryRoutes from './src/routes/CategoryRoutes.js'
+import orderItemsRoutes from './src/routes/OrderItems.js'
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors({
 }));
 
 app.use("/category", categoryRoutes);
+app.use("/order_items", orderItemsRoutes);
 
 const port = process.env.PORT || 8080;
 

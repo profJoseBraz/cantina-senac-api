@@ -8,23 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from 'express';
-import { getAllOrderItems, getOrderItemsById, getOrderItemsByOrderId, getOrderItemsByProductId } from '../controllers/OrderItemsController.js';
+import { getAllOrders, getOrdersById, getOrdersByPaymentMethodId } from '../controllers/OrdersController.js';
 import { createNewConnection } from '../database/Db.js';
 const router = express.Router();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const query = req.query;
         if (Object.keys(query).length === 0) {
-            return getAllOrderItems(req, res, yield createNewConnection());
+            return getAllOrders(req, res, yield createNewConnection());
         }
         if (query.id) {
-            return getOrderItemsById(req, res, yield createNewConnection());
+            return getOrdersById(req, res, yield createNewConnection());
         }
-        else if (query.id_pedido) {
-            return getOrderItemsByOrderId(req, res, yield createNewConnection());
-        }
-        else if (query.id_produto) {
-            return getOrderItemsByProductId(req, res, yield createNewConnection());
+        else if (query.id_forma_pagamento) {
+            return getOrdersByPaymentMethodId(req, res, yield createNewConnection());
         }
         throw new Error(`Bad Request`);
     }

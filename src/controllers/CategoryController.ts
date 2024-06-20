@@ -41,7 +41,14 @@ export const getCategoriesByName = async (req: Request, res: Response, dbConn : 
     try {
         const { nome } = req.query;
 
-        const sql = `select * from categoria where nome like ?`;
+        const sql = 
+            `
+            select 
+                * 
+            from 
+                categoria 
+            where 
+                nome like ?`;
 
         const [data] = await dbConn.query(sql, [`${nome}%`]);
         console.log(data);

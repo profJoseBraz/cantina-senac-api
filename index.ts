@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import categoryRoutes from './src/routes/CategoryRoutes.js'
-import orderItemsRoutes from './src/routes/OrderItems.js'
+import CategoryRoutes from './src/routes/CategoryRoutes.js'
+import OrderItemsRoutes from './src/routes/OrderItemsRoutes.js'
+import OrderRoutes from './src/routes/OrdersRoutes.js'
 
 const app = express();
 
@@ -15,8 +16,9 @@ app.use(cors({
     origin: allowedOrigins
 }));
 
-app.use("/category", categoryRoutes);
-app.use("/order_items", orderItemsRoutes);
+app.use("/category", CategoryRoutes);
+app.use("/order_items", OrderItemsRoutes);
+app.use("/orders", OrderRoutes);
 
 const port = process.env.PORT || 8080;
 

@@ -1,9 +1,9 @@
-import { TOrder } from "./Order";
 import { TProduct } from "./Product";
 
-export type TOrderItems = {
+export type TProduction = {
     id: number;
-    id_pedido: TOrder;
     id_produto: TProduct;
+    data: string;
     quantidade: number;
+    observacao: string;
 }

@@ -57,9 +57,9 @@ export const getOrderItemsById = async (req: Request, res: Response, dbConn : my
     }
 }
 
-export const getOrderItemsByCustomerName = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+export const getOrderItemsByOrderId = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
     try {
-        const { nome_cliente } = req.query;
+        const { id_pedido } = req.query;
 
         const sql = 
             `
@@ -72,13 +72,43 @@ export const getOrderItemsByCustomerName = async (req: Request, res: Response, d
             join produto pr
                 on pr.id = ip.id_produto
             where
-                p.nome_cliente like ?`;
+                p.id like ?`;
 
-        const [data] = await dbConn.query(sql, [`${nome_cliente}%`]);
+        const [data] = await dbConn.query(sql, [id_pedido]);
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getOrderItemsById, Erro: ${err}`);
+        console.log(`End point: getOrderItemsByOrderId, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const getOrderItemsByProductId = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { id_produto } = req.query;
+
+        const sql = 
+            `
+            select 
+                * 
+            from 
+                itens_pedido ip
+            join pedido p
+                on p.id = ip.id_pedido 
+            join produto pr
+                on pr.id = ip.id_produto
+            where
+                pr.id like ?`;
+
+        const [data] = await dbConn.query(sql, [id_produto]);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getOrderItemsByProductId, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){

@@ -3,7 +3,12 @@ import mysql from 'mysql2/promise';
 
 export const getAllCategories = async (_: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
     try {
-        const sql = `select * from categoria`;
+        const sql = 
+            `
+            select 
+                * 
+            from 
+                categoria`;
 
         const [data] = await dbConn.query(sql);
         console.log(data);
@@ -22,7 +27,14 @@ export const getCategoriesById = async (req: Request, res: Response, dbConn : my
     try {
         const { id } = req.query;
 
-        const sql = `select * from categoria where id = ?`;
+        const sql = 
+            `
+            select 
+                * 
+            from 
+                categoria 
+            where 
+                id = ?`;
 
         const [data] = await dbConn.query(sql, [id]);
         console.log(data);
@@ -39,7 +51,7 @@ export const getCategoriesById = async (req: Request, res: Response, dbConn : my
 
 export const getCategoriesByName = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
     try {
-        const { nome } = req.query;
+        const { name } = req.query;
 
         const sql = 
             `
@@ -50,7 +62,7 @@ export const getCategoriesByName = async (req: Request, res: Response, dbConn : 
             where 
                 nome like ?`;
 
-        const [data] = await dbConn.query(sql, [`${nome}%`]);
+        const [data] = await dbConn.query(sql, [`${name}%`]);
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {

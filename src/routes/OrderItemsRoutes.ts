@@ -22,9 +22,9 @@ router.get(
 
             if(query.id){
                 return getOrderItemsById(req, res, await createNewConnection());
-            }else if(query.id_pedido){
+            }else if(query.orderId){
                 return getOrderItemsByOrderId(req, res, await createNewConnection());
-            }else if(query.id_produto){
+            }else if(query.productId){
                 return getOrderItemsByProductId(req, res, await createNewConnection());
             }
 

@@ -20,7 +20,7 @@ router.get(
 
             if(query.id){
                 return getCategoriesById(req, res, await createNewConnection());
-            }else if(query.nome){
+            }else if(query.name){
                 return getCategoriesByName(req, res, await createNewConnection());
             }
 

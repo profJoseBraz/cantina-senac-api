@@ -9,7 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 export const getAllCategories = (_, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const sql = `select * from categoria`;
+        const sql = `
+            select 
+                * 
+            from 
+                categoria`;
         const [data] = yield dbConn.query(sql);
         console.log(data);
         return res.status(200).json(data);
@@ -27,7 +31,13 @@ export const getAllCategories = (_, res, dbConn) => __awaiter(void 0, void 0, vo
 export const getCategoriesById = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.query;
-        const sql = `select * from categoria where id = ?`;
+        const sql = `
+            select 
+                * 
+            from 
+                categoria 
+            where 
+                id = ?`;
         const [data] = yield dbConn.query(sql, [id]);
         console.log(data);
         return res.status(200).json(data);
@@ -44,9 +54,15 @@ export const getCategoriesById = (req, res, dbConn) => __awaiter(void 0, void 0,
 });
 export const getCategoriesByName = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { nome } = req.query;
-        const sql = `select * from categoria where nome like ?`;
-        const [data] = yield dbConn.query(sql, [`${nome}%`]);
+        const { name } = req.query;
+        const sql = `
+            select 
+                * 
+            from 
+                categoria 
+            where 
+                nome like ?`;
+        const [data] = yield dbConn.query(sql, [`${name}%`]);
         console.log(data);
         return res.status(200).json(data);
     }

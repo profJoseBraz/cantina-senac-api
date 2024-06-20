@@ -62,7 +62,7 @@ export const getOrderItemsById = (req, res, dbConn) => __awaiter(void 0, void 0,
 });
 export const getOrderItemsByOrderId = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id_pedido } = req.query;
+        const { orderId } = req.query;
         const sql = `
             select 
                 * 
@@ -74,7 +74,7 @@ export const getOrderItemsByOrderId = (req, res, dbConn) => __awaiter(void 0, vo
                 on pr.id = ip.id_produto
             where
                 p.id like ?`;
-        const [data] = yield dbConn.query(sql, [id_pedido]);
+        const [data] = yield dbConn.query(sql, [orderId]);
         console.log(data);
         return res.status(200).json(data);
     }
@@ -90,7 +90,7 @@ export const getOrderItemsByOrderId = (req, res, dbConn) => __awaiter(void 0, vo
 });
 export const getOrderItemsByProductId = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id_produto } = req.query;
+        const { productId } = req.query;
         const sql = `
             select 
                 * 
@@ -102,7 +102,7 @@ export const getOrderItemsByProductId = (req, res, dbConn) => __awaiter(void 0, 
                 on pr.id = ip.id_produto
             where
                 pr.id like ?`;
-        const [data] = yield dbConn.query(sql, [id_produto]);
+        const [data] = yield dbConn.query(sql, [productId]);
         console.log(data);
         return res.status(200).json(data);
     }

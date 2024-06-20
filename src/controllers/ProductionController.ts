@@ -1,0 +1,188 @@
+import { Request, Response } from 'express';
+import mysql from 'mysql2/promise';
+
+export const getAllProduction = async (_: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const sql = 
+            `
+            select 
+                * 
+            from
+                producao p
+            join produto pr
+                on pr.id = p.id_produto`;
+
+        const [data] = await dbConn.query(sql);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getAllProduction, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const getProductionById = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { id } = req.query;
+
+        const sql = 
+            `
+            select 
+                * 
+            from
+                producao p
+            join produto pr
+                on pr.id = p.id_produto
+            where
+                p.id = ?`;
+
+        const [data] = await dbConn.query(sql, [id]);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getProductionById, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const getProductionByProductId = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { productId } = req.query;
+
+        const sql = 
+            `
+            select 
+                * 
+            from
+                producao p
+            join produto pr
+                on pr.id = p.id_produto
+            where
+                pr.id = ?`;
+
+        const [data] = await dbConn.query(sql, [productId]);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getProductionByProductId, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const getProductionByDate = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { date, operator } = req.query;
+
+        const sqlOperator = `set @operator := ?`
+        
+        const sqlDate = `set @date := ?`
+
+        const sql = 
+            `
+            select 
+                * 
+            from
+                producao p
+            join produto pr
+                on pr.id = p.id_produto
+            where
+                case 
+                    when @operator = '>' then date(p.data) > @date
+                    when @operator = '<' then date(p.data) < @date
+                    when @operator = '=' then date(p.data) = @date
+                    else false
+                end`;
+
+        await dbConn.query(sqlOperator, [operator]);
+        await dbConn.query(sqlDate, [date]);
+        const [data] = await dbConn.query(sql);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getProductionByDate, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const getProductionByAmount = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { amount, comparator } = req.query;
+
+        const sqlOperator = `set @operator := ?`
+        
+        const sqlAmount = `set @amount := ?`
+
+        const sql = 
+            `
+            select 
+                * 
+            from
+                producao p
+            join produto pr
+                on pr.id = p.id_produto
+            where
+                case 
+                    when @operator = '>' then p.quantidade > @amount
+                    when @operator = '<' then p.quantidade < @amount
+                    when @operator = '=' then p.quantidade = @amount
+                    else false
+                end`;
+
+        await dbConn.query(sqlOperator, [comparator]);
+        await dbConn.query(sqlAmount, [amount]);
+        const [data] = await dbConn.query(sql);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getProductionByAmount, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const getProductionByObservation = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { observation } = req.query;
+
+        const sql = 
+            `
+            select 
+                * 
+            from
+                producao p
+            join produto pr
+                on pr.id = p.id_produto
+            where
+                p.observacao like ?`;
+
+        const [data] = await dbConn.query(sql, [`%${observation}%`]);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getProductionByObservation, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}

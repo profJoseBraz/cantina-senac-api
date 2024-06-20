@@ -20,10 +20,10 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (query.id) {
             return getOrderItemsById(req, res, yield createNewConnection());
         }
-        else if (query.id_pedido) {
+        else if (query.orderId) {
             return getOrderItemsByOrderId(req, res, yield createNewConnection());
         }
-        else if (query.id_produto) {
+        else if (query.productId) {
             return getOrderItemsByProductId(req, res, yield createNewConnection());
         }
         throw new Error(`Bad Request`);

@@ -55,7 +55,7 @@ export const getOrdersById = async (req: Request, res: Response, dbConn : mysql.
 
 export const getOrdersByPaymentMethodId = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
     try {
-        const { id_forma_pagamento } = req.query;
+        const { paymentMethodId } = req.query;
 
         const sql = 
             `
@@ -68,11 +68,117 @@ export const getOrdersByPaymentMethodId = async (req: Request, res: Response, db
             where
                 fp.id = ?`;
 
-        const [data] = await dbConn.query(sql, [id_forma_pagamento]);
+        const [data] = await dbConn.query(sql, [paymentMethodId]);
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`End point: getOrdersByPaymentMethodId, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const getOrdersByCustomerName = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { customerName } = req.query;
+
+        const sql = 
+            `
+            select 
+                * 
+            from 
+                pedido p
+            join forma_pagamento fp 
+                on fp.id = p.id_forma_pagamento
+            where
+                p.nome_cliente like ?`;
+
+        const [data] = await dbConn.query(sql, [`${customerName}%`]);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getOrdersByCustomerName, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const getOrdersByDate = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { date, operator } = req.query;
+
+        const sqlOperator = `set @operator := ?`
+        
+        const sqlDate = `set @date := ?`
+
+        const sql = 
+            `
+            select 
+                * 
+            from 
+                pedido p
+            join forma_pagamento fp 
+                on fp.id = p.id_forma_pagamento
+            where
+                case 
+                    when @operator = '>' then date(p.data) > @date
+                    when @operator = '<' then date(p.data) < @date
+                    when @operator = '=' then date(p.data) = @date
+                    else false
+                end`;
+
+        await dbConn.query(sqlOperator, [operator]);
+        await dbConn.query(sqlDate, [date]);
+        const [data] = await dbConn.query(sql);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getOrdersByDate, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const getOrdersByValue = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { value, operator } = req.query;
+
+        const sqlOperator = `set @operator := ?`
+        
+        const sqlValue = `set @value := ?`
+
+        const sql = 
+            `
+            select 
+                * 
+            from 
+                pedido p
+            join forma_pagamento fp 
+                on fp.id = p.id_forma_pagamento
+            where
+                case 
+                    when @operator = '>' then p.valor > @value
+                    when @operator = '<' then p.valor < @value
+                    when @operator = '=' then p.valor = @value
+                    else false
+                end`;
+
+        await dbConn.query(sqlOperator, [operator]);
+        await dbConn.query(sqlValue, [value]);
+        const [data] = await dbConn.query(sql);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getOrdersByDate, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){

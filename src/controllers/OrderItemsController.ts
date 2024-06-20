@@ -59,7 +59,7 @@ export const getOrderItemsById = async (req: Request, res: Response, dbConn : my
 
 export const getOrderItemsByOrderId = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
     try {
-        const { id_pedido } = req.query;
+        const { orderId } = req.query;
 
         const sql = 
             `
@@ -74,7 +74,7 @@ export const getOrderItemsByOrderId = async (req: Request, res: Response, dbConn
             where
                 p.id like ?`;
 
-        const [data] = await dbConn.query(sql, [id_pedido]);
+        const [data] = await dbConn.query(sql, [orderId]);
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
@@ -89,7 +89,7 @@ export const getOrderItemsByOrderId = async (req: Request, res: Response, dbConn
 
 export const getOrderItemsByProductId = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
     try {
-        const { id_produto } = req.query;
+        const { productId } = req.query;
 
         const sql = 
             `
@@ -104,7 +104,7 @@ export const getOrderItemsByProductId = async (req: Request, res: Response, dbCo
             where
                 pr.id like ?`;
 
-        const [data] = await dbConn.query(sql, [id_produto]);
+        const [data] = await dbConn.query(sql, [productId]);
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {

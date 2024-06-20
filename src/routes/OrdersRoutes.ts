@@ -2,7 +2,10 @@ import express, { Request, Response } from 'express';
 import { 
     getAllOrders,
     getOrdersById,
-    getOrdersByPaymentMethodId
+    getOrdersByPaymentMethodId,
+    getOrdersByCustomerName,
+    getOrdersByDate,
+    getOrdersByValue
 } from '../controllers/OrdersController.js';
 import { createNewConnection } from '../database/Db.js';
 import { TOrder } from '../types/model/Order.js';
@@ -21,8 +24,14 @@ router.get(
 
             if(query.id){
                 return getOrdersById(req, res, await createNewConnection());
-            }else if(query.id_forma_pagamento){
+            }else if(query.paymentMethodId){
                 return getOrdersByPaymentMethodId(req, res, await createNewConnection());
+            }else if(query.customerName){
+                return getOrdersByCustomerName(req, res, await createNewConnection());
+            }else if(query.date){
+                return getOrdersByDate(req, res, await createNewConnection());
+            }else if(query.value){
+                return getOrdersByValue(req, res, await createNewConnection());
             }
 
             throw new Error(`Bad Request`);

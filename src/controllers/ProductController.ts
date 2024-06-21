@@ -16,7 +16,7 @@ export const getAllProducts = async (_: Request, res: Response, dbConn : mysql.C
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getAllProducts, Erro: ${err}`);
+        console.log(`Endpoint: getAllProducts, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -44,7 +44,7 @@ export const getProductsById = async (req: Request, res: Response, dbConn : mysq
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getProductsById, Erro: ${err}`);
+        console.log(`Endpoint: getProductsById, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -72,7 +72,7 @@ export const getProductsByCategoryId = async (req: Request, res: Response, dbCon
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getProductsById, Erro: ${err}`);
+        console.log(`Endpoint: getProductsById, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -100,7 +100,7 @@ export const getProductsByName = async (req: Request, res: Response, dbConn : my
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getProductsByName, Erro: ${err}`);
+        console.log(`Endpoint: getProductsByName, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -128,7 +128,7 @@ export const getProductsByDescription = async (req: Request, res: Response, dbCo
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getProductsByDescription, Erro: ${err}`);
+        console.log(`Endpoint: getProductsByDescription, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){

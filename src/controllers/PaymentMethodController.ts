@@ -14,7 +14,7 @@ export const getAllPaymentMethods = async (_: Request, res: Response, dbConn : m
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getAllPaymentMethods, Erro: ${err}`);
+        console.log(`Endpoint: getAllPaymentMethods, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -40,7 +40,7 @@ export const getPaymentMethodsById = async (req: Request, res: Response, dbConn 
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getPaymentMethodsById, Erro: ${err}`);
+        console.log(`Endpoint: getPaymentMethodsById, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -66,7 +66,7 @@ export const getPaymentMethodsByName = async (req: Request, res: Response, dbCon
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getPaymentMethodsByName, Erro: ${err}`);
+        console.log(`Endpoint: getPaymentMethodsByName, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){

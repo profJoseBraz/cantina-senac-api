@@ -5,7 +5,7 @@ import {
     getOrdersByPaymentMethodId,
     getOrdersByCustomerName,
     getOrdersByDate,
-    getOrdersByValue
+    addOrder
 } from '../controllers/OrdersController.js';
 import { createNewConnection } from '../database/Db.js';
 import { TOrder } from '../types/model/Order.js';
@@ -30,8 +30,6 @@ router.get(
                 return getOrdersByCustomerName(req, res, await createNewConnection());
             }else if(query.date){
                 return getOrdersByDate(req, res, await createNewConnection());
-            }else if(query.value){
-                return getOrdersByValue(req, res, await createNewConnection());
             }
 
             throw new Error(`Bad Request`);
@@ -40,5 +38,9 @@ router.get(
             return res.status(400).json({Message: err.message});
         }
     });
+
+router.post(
+    "/addOrder", 
+    async (req: Request, res: Response) => addOrder(req, res, await createNewConnection()));
 
 export default router;

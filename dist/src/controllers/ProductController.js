@@ -21,7 +21,7 @@ export const getAllProducts = (_, res, dbConn) => __awaiter(void 0, void 0, void
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getAllProducts, Erro: ${err}`);
+        console.log(`Endpoint: getAllProducts, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -47,7 +47,7 @@ export const getProductsById = (req, res, dbConn) => __awaiter(void 0, void 0, v
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getProductsById, Erro: ${err}`);
+        console.log(`Endpoint: getProductsById, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -73,7 +73,7 @@ export const getProductsByCategoryId = (req, res, dbConn) => __awaiter(void 0, v
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getProductsById, Erro: ${err}`);
+        console.log(`Endpoint: getProductsById, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -99,7 +99,7 @@ export const getProductsByName = (req, res, dbConn) => __awaiter(void 0, void 0,
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getProductsByName, Erro: ${err}`);
+        console.log(`Endpoint: getProductsByName, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -125,7 +125,7 @@ export const getProductsByDescription = (req, res, dbConn) => __awaiter(void 0, 
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getProductsByDescription, Erro: ${err}`);
+        console.log(`Endpoint: getProductsByDescription, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {

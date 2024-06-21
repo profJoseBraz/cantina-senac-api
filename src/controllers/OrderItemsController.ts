@@ -18,7 +18,7 @@ export const getAllOrderItems = async (_: Request, res: Response, dbConn : mysql
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getAllOrderItems, Erro: ${err}`);
+        console.log(`Endpoint: getAllOrderItems, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -48,7 +48,7 @@ export const getOrderItemsById = async (req: Request, res: Response, dbConn : my
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getOrderItemsById, Erro: ${err}`);
+        console.log(`Endpoint: getOrderItemsById, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -78,7 +78,7 @@ export const getOrderItemsByOrderId = async (req: Request, res: Response, dbConn
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getOrderItemsByOrderId, Erro: ${err}`);
+        console.log(`Endpoint: getOrderItemsByOrderId, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -108,7 +108,44 @@ export const getOrderItemsByProductId = async (req: Request, res: Response, dbCo
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getOrderItemsByProductId, Erro: ${err}`);
+        console.log(`Endpoint: getOrderItemsByProductId, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const getOrderItemsTotalById = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { id } = req.query;
+
+        const sql = 
+            `
+            select
+                p.id as id,
+                p.nome_cliente as nome_cliente,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
+                sum(p2.valor * ip.quantidade) as valor_total 
+            from
+                itens_pedido ip 
+            join pedido p 
+                on p.id = ip.id_pedido 
+            join produto p2 
+                on p2.id = ip.id_produto
+            where
+                p.id = ?
+            group by
+                p.id,
+                p.nome_cliente`;
+
+        const [data] = await dbConn.query(sql, [id]);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`Endpoint: getOrderItemsByProductId, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){

@@ -14,7 +14,7 @@ export const getAllCategories = async (_: Request, res: Response, dbConn : mysql
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getCategories, Erro: ${err}`);
+        console.log(`Endpoint: getCategories, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -40,7 +40,7 @@ export const getCategoriesById = async (req: Request, res: Response, dbConn : my
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getCategoriesById, Erro: ${err}`);
+        console.log(`Endpoint: getCategoriesById, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -66,7 +66,7 @@ export const getCategoriesByName = async (req: Request, res: Response, dbConn : 
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getCategoriesByName, Erro: ${err}`);
+        console.log(`Endpoint: getCategoriesByName, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){

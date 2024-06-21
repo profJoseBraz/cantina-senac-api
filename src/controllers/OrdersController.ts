@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import mysql from 'mysql2/promise';
+import { SetCurrentTimeZone } from '../helpers/SetCurrentTimeZone.js';
 
 export const getAllOrders = async (_: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
     try {
@@ -148,39 +149,45 @@ export const getOrdersByDate = async (req: Request, res: Response, dbConn : mysq
     }
 }
 
-export const getOrdersByValue = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
-    try {
-        const { value, operator } = req.query;
-
-        const sqlOperator = `set @operator := ?`
-        
-        const sqlValue = `set @value := ?`
+export const addOrder = async (req: Request, res: Response, dbConn : mysql.Connection) => {
+    try{
+        const { 
+            paymentMethodId, 
+            customerName,
+            value 
+        } = req.body;
 
         const sql = 
             `
-            select 
-                * 
-            from 
-                pedido p
-            join forma_pagamento fp 
-                on fp.id = p.id_forma_pagamento
-            where
-                case 
-                    when @operator = '>' then p.valor > @value
-                    when @operator = '<' then p.valor < @value
-                    when @operator = '=' then p.valor = @value
-                    else false
-                end`;
+            insert into pedido
+                (
+                    id_forma_pagamento,
+                    nome_cliente,
+                    data
+                )
+            values
+                (
+                    ?,
+                    ?,
+                    now()
+                )`;
+        
+        dbConn.beginTransaction();
 
-        await dbConn.query(sqlOperator, [operator]);
-        await dbConn.query(sqlValue, [value]);
-        const [data] = await dbConn.query(sql);
-        console.log(data);
-        return res.status(200).json(data);
-    } catch (err) {
-        console.log(`End point: getOrdersByDate, Erro: ${err}`);
-        return res.status(500).json(err);
-    } finally {
+        await SetCurrentTimeZone('America/Sao_Paulo', false, dbConn);
+        await dbConn.query(sql, [paymentMethodId, customerName, value]);
+
+        await dbConn.commit();
+
+        console.log(`Novo pedido cadastrado.`);
+        res.status(201).json({message: "Novo pedido cadastrado."})
+    }catch(err: any){
+        if(dbConn){
+            dbConn.rollback();
+        }
+
+        console.log(`Endpoint: addOrder, Erro: ${err}`);
+    }finally{
         if(dbConn){
             dbConn.end();
         }

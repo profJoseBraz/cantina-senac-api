@@ -23,7 +23,7 @@ export const getAllOrderItems = (_, res, dbConn) => __awaiter(void 0, void 0, vo
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getAllOrderItems, Erro: ${err}`);
+        console.log(`Endpoint: getAllOrderItems, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -51,7 +51,7 @@ export const getOrderItemsById = (req, res, dbConn) => __awaiter(void 0, void 0,
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getOrderItemsById, Erro: ${err}`);
+        console.log(`Endpoint: getOrderItemsById, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -79,7 +79,7 @@ export const getOrderItemsByOrderId = (req, res, dbConn) => __awaiter(void 0, vo
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getOrderItemsByOrderId, Erro: ${err}`);
+        console.log(`Endpoint: getOrderItemsByOrderId, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -107,7 +107,42 @@ export const getOrderItemsByProductId = (req, res, dbConn) => __awaiter(void 0, 
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getOrderItemsByProductId, Erro: ${err}`);
+        console.log(`Endpoint: getOrderItemsByProductId, Erro: ${err}`);
+        return res.status(500).json(err);
+    }
+    finally {
+        if (dbConn) {
+            dbConn.end();
+        }
+    }
+});
+export const getOrderItemsTotalById = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.query;
+        const sql = `
+            select
+                p.id as id,
+                p.nome_cliente as nome_cliente,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
+                sum(p2.valor * ip.quantidade) as valor_total 
+            from
+                itens_pedido ip 
+            join pedido p 
+                on p.id = ip.id_pedido 
+            join produto p2 
+                on p2.id = ip.id_produto
+            where
+                p.id = ?
+            group by
+                p.id,
+                p.nome_cliente`;
+        const [data] = yield dbConn.query(sql, [id]);
+        console.log(data);
+        return res.status(200).json(data);
+    }
+    catch (err) {
+        console.log(`Endpoint: getOrderItemsByProductId, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {

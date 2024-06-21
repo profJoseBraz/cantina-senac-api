@@ -16,7 +16,7 @@ export const getAllProduction = async (_: Request, res: Response, dbConn : mysql
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getAllProduction, Erro: ${err}`);
+        console.log(`Endpoint: getAllProduction, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -44,7 +44,7 @@ export const getProductionById = async (req: Request, res: Response, dbConn : my
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getProductionById, Erro: ${err}`);
+        console.log(`Endpoint: getProductionById, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -72,7 +72,7 @@ export const getProductionByProductId = async (req: Request, res: Response, dbCo
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getProductionByProductId, Erro: ${err}`);
+        console.log(`Endpoint: getProductionByProductId, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -111,7 +111,7 @@ export const getProductionByDate = async (req: Request, res: Response, dbConn : 
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getProductionByDate, Erro: ${err}`);
+        console.log(`Endpoint: getProductionByDate, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -150,7 +150,7 @@ export const getProductionByAmount = async (req: Request, res: Response, dbConn 
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getProductionByAmount, Erro: ${err}`);
+        console.log(`Endpoint: getProductionByAmount, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){
@@ -178,7 +178,7 @@ export const getProductionByObservation = async (req: Request, res: Response, db
         console.log(data);
         return res.status(200).json(data);
     } catch (err) {
-        console.log(`End point: getProductionByObservation, Erro: ${err}`);
+        console.log(`Endpoint: getProductionByObservation, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
         if(dbConn){

@@ -19,7 +19,7 @@ export const getAllCategories = (_, res, dbConn) => __awaiter(void 0, void 0, vo
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getCategories, Erro: ${err}`);
+        console.log(`Endpoint: getCategories, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -43,7 +43,7 @@ export const getCategoriesById = (req, res, dbConn) => __awaiter(void 0, void 0,
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getCategoriesById, Erro: ${err}`);
+        console.log(`Endpoint: getCategoriesById, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -67,7 +67,7 @@ export const getCategoriesByName = (req, res, dbConn) => __awaiter(void 0, void 
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getCategoriesByName, Erro: ${err}`);
+        console.log(`Endpoint: getCategoriesByName, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {

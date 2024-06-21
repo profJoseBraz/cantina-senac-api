@@ -21,7 +21,7 @@ export const getAllProduction = (_, res, dbConn) => __awaiter(void 0, void 0, vo
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getAllProduction, Erro: ${err}`);
+        console.log(`Endpoint: getAllProduction, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -47,7 +47,7 @@ export const getProductionById = (req, res, dbConn) => __awaiter(void 0, void 0,
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getProductionById, Erro: ${err}`);
+        console.log(`Endpoint: getProductionById, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -73,7 +73,7 @@ export const getProductionByProductId = (req, res, dbConn) => __awaiter(void 0, 
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getProductionByProductId, Erro: ${err}`);
+        console.log(`Endpoint: getProductionByProductId, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -108,7 +108,7 @@ export const getProductionByDate = (req, res, dbConn) => __awaiter(void 0, void 
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getProductionByDate, Erro: ${err}`);
+        console.log(`Endpoint: getProductionByDate, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -143,7 +143,7 @@ export const getProductionByAmount = (req, res, dbConn) => __awaiter(void 0, voi
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getProductionByAmount, Erro: ${err}`);
+        console.log(`Endpoint: getProductionByAmount, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -169,7 +169,7 @@ export const getProductionByObservation = (req, res, dbConn) => __awaiter(void 0
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getProductionByObservation, Erro: ${err}`);
+        console.log(`Endpoint: getProductionByObservation, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {

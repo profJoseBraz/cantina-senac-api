@@ -3,7 +3,8 @@ import {
     getAllOrderItems,
     getOrderItemsById,
     getOrderItemsByOrderId,
-    getOrderItemsByProductId
+    getOrderItemsByProductId,
+    getOrderItemsTotalById
 } from '../controllers/OrderItemsController.js'; 
 import { createNewConnection } from '../database/Db.js';
 import { TOrderItems } from '../types/model/OrderItems.js';
@@ -34,5 +35,9 @@ router.get(
             return res.status(400).json({Message: err.message});
         }
     });
+
+router.get(
+    "/report",
+    async (req: Request, res: Response) => getOrderItemsTotalById(req, res, await createNewConnection()));
 
 export default router;

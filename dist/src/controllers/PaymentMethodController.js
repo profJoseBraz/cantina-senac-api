@@ -19,7 +19,7 @@ export const getAllPaymentMethods = (_, res, dbConn) => __awaiter(void 0, void 0
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getAllPaymentMethods, Erro: ${err}`);
+        console.log(`Endpoint: getAllPaymentMethods, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -43,7 +43,7 @@ export const getPaymentMethodsById = (req, res, dbConn) => __awaiter(void 0, voi
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getPaymentMethodsById, Erro: ${err}`);
+        console.log(`Endpoint: getPaymentMethodsById, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {
@@ -67,7 +67,7 @@ export const getPaymentMethodsByName = (req, res, dbConn) => __awaiter(void 0, v
         return res.status(200).json(data);
     }
     catch (err) {
-        console.log(`End point: getPaymentMethodsByName, Erro: ${err}`);
+        console.log(`Endpoint: getPaymentMethodsByName, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {

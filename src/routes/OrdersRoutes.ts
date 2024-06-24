@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
 import { 
+    addOrder,
     getAllOrders,
     getOrdersById,
     getOrdersByPaymentMethodId,
     getOrdersByCustomerName,
-    getOrdersByDate,
-    addOrder
+    getOrdersByDate
 } from '../controllers/OrdersController.js';
 import { createNewConnection } from '../database/Db.js';
 import { TOrder } from '../types/model/Order.js';

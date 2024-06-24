@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from 'express';
-import { getAllOrders, getOrdersById, getOrdersByPaymentMethodId, getOrdersByCustomerName, getOrdersByDate, addOrder } from '../controllers/OrdersController.js';
+import { addOrder, getAllOrders, getOrdersById, getOrdersByPaymentMethodId, getOrdersByCustomerName, getOrdersByDate } from '../controllers/OrdersController.js';
 import { createNewConnection } from '../database/Db.js';
 const router = express.Router();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

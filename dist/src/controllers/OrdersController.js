@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { SetCurrentTimeZone } from '../helpers/SetCurrentTimeZone.js';
+import { addOrderItems } from './OrderItemsController.js';
 export const getAllOrders = (_, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sql = `
@@ -146,7 +147,7 @@ export const getOrdersByDate = (req, res, dbConn) => __awaiter(void 0, void 0, v
 });
 export const addOrder = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { paymentMethodId, customerName, value } = req.body;
+        const { paymentMethodId, customerName } = req.body;
         const sql = `
             insert into pedido
                 (
@@ -162,7 +163,8 @@ export const addOrder = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, 
                 )`;
         dbConn.beginTransaction();
         yield SetCurrentTimeZone('America/Sao_Paulo', false, dbConn);
-        yield dbConn.query(sql, [paymentMethodId, customerName, value]);
+        const [result] = yield dbConn.query(sql, [paymentMethodId, customerName]);
+        yield addOrderItems(result.insertId, false, req, res, dbConn);
         yield dbConn.commit();
         console.log(`Novo pedido cadastrado.`);
         res.status(201).json({ message: "Novo pedido cadastrado." });

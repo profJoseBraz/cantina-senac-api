@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import mysql from 'mysql2/promise';
 import { SetCurrentTimeZone } from '../helpers/SetCurrentTimeZone.js';
+import { addOrderItems } from './OrderItemsController.js';
 
 export const getAllOrders = async (_: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
     try {
@@ -153,8 +154,7 @@ export const addOrder = async (req: Request, res: Response, dbConn : mysql.Conne
     try{
         const { 
             paymentMethodId, 
-            customerName,
-            value 
+            customerName 
         } = req.body;
 
         const sql = 
@@ -175,7 +175,9 @@ export const addOrder = async (req: Request, res: Response, dbConn : mysql.Conne
         dbConn.beginTransaction();
 
         await SetCurrentTimeZone('America/Sao_Paulo', false, dbConn);
-        await dbConn.query(sql, [paymentMethodId, customerName, value]);
+        const [result] : any = await dbConn.query(sql, [paymentMethodId, customerName]);
+
+        await addOrderItems(result.insertId, false, req, res, dbConn);
 
         await dbConn.commit();
 

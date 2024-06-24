@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import mysql from 'mysql2/promise';
+import { TProduct } from '../types/model/Product';
+import { TOrderItems } from '../types/model/OrderItems';
 
 export const getAllOrderItems = async (_: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
     try {
@@ -149,6 +151,53 @@ export const getOrderItemsTotalById = async (req: Request, res: Response, dbConn
         return res.status(500).json(err);
     } finally {
         if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const addOrderItems = async (orderId: number, closeConn: boolean, req: Request, res: Response, dbConn : mysql.Connection) => {
+    try{
+        const { 
+            orderItems 
+        } = req.body;
+
+        const sql = 
+            `
+            insert into itens_pedido 
+                (
+                    id_pedido,
+                    id_produto,
+                    quantidade
+                )
+            values
+                (
+                    ?,
+                    ?,
+                    ?
+                )`;
+        
+        dbConn.beginTransaction();
+
+        for (const orderItem of orderItems as Array<TOrderItems>) {
+            try {
+                await dbConn.query(sql, [orderId, orderItem.productId, orderItem.amount]);
+            } catch (error) {
+                throw new Error(`Erro ao inserir os itens do pedido. Motivo: ${error}`);
+            }
+        }
+
+        await dbConn.commit();
+
+        console.log(`Itens adicionados com sucesso.`);
+    }catch(err: any){
+        if(dbConn){
+            dbConn.rollback();
+        }
+
+        console.log(`Endpoint: addOrderItems, Erro: ${err}`);
+    }finally{
+        if(dbConn && closeConn){
             dbConn.end();
         }
     }

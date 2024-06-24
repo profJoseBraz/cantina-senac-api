@@ -151,3 +151,43 @@ export const getOrderItemsTotalById = (req, res, dbConn) => __awaiter(void 0, vo
         }
     }
 });
+export const addOrderItems = (orderId, closeConn, req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { orderItems } = req.body;
+        const sql = `
+            insert into itens_pedido 
+                (
+                    id_pedido,
+                    id_produto,
+                    quantidade
+                )
+            values
+                (
+                    ?,
+                    ?,
+                    ?
+                )`;
+        dbConn.beginTransaction();
+        for (const orderItem of orderItems) {
+            try {
+                yield dbConn.query(sql, [orderId, orderItem.productId, orderItem.amount]);
+            }
+            catch (error) {
+                throw new Error("Erro ao inserir os itens do pedido." + error);
+            }
+        }
+        yield dbConn.commit();
+        console.log(`Itens adicionados com sucesso.`);
+    }
+    catch (err) {
+        if (dbConn) {
+            dbConn.rollback();
+        }
+        console.log(`Endpoint: addOrderItems, Erro: ${err}`);
+    }
+    finally {
+        if (dbConn && closeConn) {
+            dbConn.end();
+        }
+    }
+});

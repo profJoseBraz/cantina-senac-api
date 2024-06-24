@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { 
+    addOrderItems,
     getAllOrderItems,
     getOrderItemsById,
     getOrderItemsByOrderId,

@@ -173,7 +173,7 @@ export const addOrderItems = (orderId, closeConn, req, res, dbConn) => __awaiter
                 yield dbConn.query(sql, [orderId, orderItem.productId, orderItem.amount]);
             }
             catch (error) {
-                throw new Error("Erro ao inserir os itens do pedido." + error);
+                throw new Error(`Erro ao inserir os itens do pedido. Motivo: ${error}`);
             }
         }
         yield dbConn.commit();

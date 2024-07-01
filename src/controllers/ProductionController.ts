@@ -6,7 +6,16 @@ export const getAllProduction = async (_: Request, res: Response, dbConn : mysql
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -32,7 +41,16 @@ export const getProductionById = async (req: Request, res: Response, dbConn : my
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -60,7 +78,16 @@ export const getProductionByProductId = async (req: Request, res: Response, dbCo
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -92,7 +119,16 @@ export const getProductionByDate = async (req: Request, res: Response, dbConn : 
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -131,7 +167,16 @@ export const getProductionByAmount = async (req: Request, res: Response, dbConn 
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -166,7 +211,16 @@ export const getProductionByObservation = async (req: Request, res: Response, db
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -194,7 +248,16 @@ export const getProductionByProductCategoryId = async (req: Request, res: Respon
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr

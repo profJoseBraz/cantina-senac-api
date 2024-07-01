@@ -11,7 +11,16 @@ export const getAllProduction = (_, res, dbConn) => __awaiter(void 0, void 0, vo
     try {
         const sql = `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -35,7 +44,16 @@ export const getProductionById = (req, res, dbConn) => __awaiter(void 0, void 0,
         const { id } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -61,7 +79,16 @@ export const getProductionByProductId = (req, res, dbConn) => __awaiter(void 0, 
         const { productId } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -89,7 +116,16 @@ export const getProductionByDate = (req, res, dbConn) => __awaiter(void 0, void 
         const sqlDate = `set @date := ?`;
         const sql = `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -124,7 +160,16 @@ export const getProductionByAmount = (req, res, dbConn) => __awaiter(void 0, voi
         const sqlAmount = `set @amount := ?`;
         const sql = `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -157,7 +202,16 @@ export const getProductionByObservation = (req, res, dbConn) => __awaiter(void 0
         const { observation } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr
@@ -183,7 +237,16 @@ export const getProductionByProductCategoryId = (req, res, dbConn) => __awaiter(
         const { categoryId } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.data,
+                p.quantidade,
+                p.observacao,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from
                 producao p
             join produto pr

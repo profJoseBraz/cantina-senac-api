@@ -186,3 +186,31 @@ export const getProductionByObservation = async (req: Request, res: Response, db
         }
     }
 }
+
+export const getProductionByProductCategoryId = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { categoryId } = req.query;
+
+        const sql = 
+            `
+            select 
+                * 
+            from
+                producao p
+            join produto pr
+                on pr.id = p.id_produto
+            where
+                pr.id_categoria = ?`;
+
+        const [data] = await dbConn.query(sql, categoryId);
+        console.log(data);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`Endpoint: getProductionByObservation, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}

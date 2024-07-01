@@ -6,7 +6,13 @@ export const getAllProducts = async (_: Request, res: Response, dbConn : mysql.C
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                c.id as id_categoria,
+                c.nome as nome_categoria
             from 
                 produto p
             join categoria c 
@@ -32,7 +38,13 @@ export const getProductsById = async (req: Request, res: Response, dbConn : mysq
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                c.id as id_categoria,
+                c.nome as nome_categoria 
             from 
                 produto p
             join categoria c 
@@ -60,7 +72,13 @@ export const getProductsByCategoryId = async (req: Request, res: Response, dbCon
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                c.id as id_categoria,
+                c.nome as nome_categoria 
             from 
                 produto p
             join categoria c 
@@ -88,7 +106,13 @@ export const getProductsByName = async (req: Request, res: Response, dbConn : my
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                c.id as id_categoria,
+                c.nome as nome_categoria 
             from 
                 produto p
             join categoria c 
@@ -116,7 +140,13 @@ export const getProductsByDescription = async (req: Request, res: Response, dbCo
         const sql = 
             `
             select 
-                * 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                c.id as id_categoria,
+                c.nome as nome_categoria 
             from 
                 produto p
             join categoria c 

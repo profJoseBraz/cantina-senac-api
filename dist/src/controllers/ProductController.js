@@ -11,7 +11,13 @@ export const getAllProducts = (_, res, dbConn) => __awaiter(void 0, void 0, void
     try {
         const sql = `
             select 
-                * 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                c.id as id_categoria,
+                c.nome as nome_categoria
             from 
                 produto p
             join categoria c 
@@ -35,7 +41,13 @@ export const getProductsById = (req, res, dbConn) => __awaiter(void 0, void 0, v
         const { id } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                c.id as id_categoria,
+                c.nome as nome_categoria 
             from 
                 produto p
             join categoria c 
@@ -61,7 +73,13 @@ export const getProductsByCategoryId = (req, res, dbConn) => __awaiter(void 0, v
         const { categoryId } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                c.id as id_categoria,
+                c.nome as nome_categoria 
             from 
                 produto p
             join categoria c 
@@ -87,7 +105,13 @@ export const getProductsByName = (req, res, dbConn) => __awaiter(void 0, void 0,
         const { name } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                c.id as id_categoria,
+                c.nome as nome_categoria 
             from 
                 produto p
             join categoria c 
@@ -113,7 +137,13 @@ export const getProductsByDescription = (req, res, dbConn) => __awaiter(void 0, 
         const { description } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                c.id as id_categoria,
+                c.nome as nome_categoria 
             from 
                 produto p
             join categoria c 

@@ -19,7 +19,6 @@ export const getAllOrderItems = (_, res, dbConn) => __awaiter(void 0, void 0, vo
             join produto pr
                 on pr.id = ip.id_produto`;
         const [data] = yield dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -47,7 +46,6 @@ export const getOrderItemsById = (req, res, dbConn) => __awaiter(void 0, void 0,
             where
                 ip.id = ?`;
         const [data] = yield dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {

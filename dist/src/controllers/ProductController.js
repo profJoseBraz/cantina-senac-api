@@ -23,7 +23,6 @@ export const getAllProducts = (_, res, dbConn) => __awaiter(void 0, void 0, void
             join categoria c 
                 on c.id = p.id_categoria`;
         const [data] = yield dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -55,7 +54,6 @@ export const getProductsById = (req, res, dbConn) => __awaiter(void 0, void 0, v
             where
                 p.id = ?`;
         const [data] = yield dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -87,7 +85,6 @@ export const getProductsByCategoryId = (req, res, dbConn) => __awaiter(void 0, v
             where
                 c.id = ?`;
         const [data] = yield dbConn.query(sql, [categoryId]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -119,7 +116,6 @@ export const getProductsByName = (req, res, dbConn) => __awaiter(void 0, void 0,
             where
                 p.nome like ?`;
         const [data] = yield dbConn.query(sql, [`${name}%`]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -151,11 +147,93 @@ export const getProductsByDescription = (req, res, dbConn) => __awaiter(void 0, 
             where
                 p.descricao like ?`;
         const [data] = yield dbConn.query(sql, [`${description}%`]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
         console.log(`Endpoint: getProductsByDescription, Erro: ${err}`);
+        return res.status(500).json(err);
+    }
+    finally {
+        if (dbConn) {
+            dbConn.end();
+        }
+    }
+});
+export const addProduct = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { categoryId, name, description, value, image } = req.body;
+        const sql = `
+            insert into produto 
+                (
+                    id_categoria, 
+                    nome, 
+                    descricao, 
+                    valor, 
+                    imagem
+                )
+            values
+                (
+                    ?, 
+                    ?, 
+                    ?, 
+                    ?,
+                    ?
+                )`;
+        dbConn.beginTransaction();
+        yield dbConn.query(sql, [categoryId, name, description, value, image]);
+        yield dbConn.commit();
+        res.status(201).json({ message: "Novo produto adicionado." });
+    }
+    catch (err) {
+        console.log(`Endpoint: addProduct, Erro: ${err}`);
+        return res.status(500).json(err);
+    }
+    finally {
+        if (dbConn) {
+            dbConn.end();
+        }
+    }
+});
+export const updateProduct = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.query;
+        const { categoryId, name, description, value, image } = req.body;
+        const sql = `
+            update produto set
+                id_categoria = ?, 
+                nome = ?, 
+                descricao = ?, 
+                valor = ?, 
+                imagem = ?
+            where
+                id = ?`;
+        dbConn.beginTransaction();
+        yield dbConn.query(sql, [categoryId, name, description, value, image, id]);
+        yield dbConn.commit();
+        res.status(200).json({ message: "Produto alterado com sucesso." });
+    }
+    catch (err) {
+        console.log(`Endpoint: updateProduct, Erro: ${err}`);
+        return res.status(500).json(err);
+    }
+    finally {
+        if (dbConn) {
+            dbConn.end();
+        }
+    }
+});
+export const deleteProduct = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.query;
+        const sql = `
+            delete from produto where id = ?`;
+        dbConn.beginTransaction();
+        yield dbConn.query(sql, [id]);
+        yield dbConn.commit();
+        res.status(200).json({ message: "Produto removido com sucesso." });
+    }
+    catch (err) {
+        console.log(`Endpoint: deleteProduct, Erro: ${err}`);
         return res.status(500).json(err);
     }
     finally {

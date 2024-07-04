@@ -11,7 +11,6 @@ export const getAllCategories = async (_: Request, res: Response, dbConn : mysql
                 categoria`;
 
         const [data] = await dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getCategories, Erro: ${err}`);

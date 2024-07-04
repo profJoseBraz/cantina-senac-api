@@ -59,7 +59,6 @@ export const getProductionById = async (req: Request, res: Response, dbConn : my
                 p.id = ?`;
 
         const [data] = await dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getProductionById, Erro: ${err}`);
@@ -96,7 +95,6 @@ export const getProductionByProductId = async (req: Request, res: Response, dbCo
                 pr.id = ?`;
 
         const [data] = await dbConn.query(sql, [productId]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getProductionByProductId, Erro: ${err}`);
@@ -144,7 +142,6 @@ export const getProductionByDate = async (req: Request, res: Response, dbConn : 
         await dbConn.query(sqlOperator, [operator]);
         await dbConn.query(sqlDate, [date]);
         const [data] = await dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getProductionByDate, Erro: ${err}`);
@@ -192,7 +189,6 @@ export const getProductionByAmount = async (req: Request, res: Response, dbConn 
         await dbConn.query(sqlOperator, [comparator]);
         await dbConn.query(sqlAmount, [amount]);
         const [data] = await dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getProductionByAmount, Erro: ${err}`);
@@ -229,7 +225,6 @@ export const getProductionByObservation = async (req: Request, res: Response, db
                 p.observacao like ?`;
 
         const [data] = await dbConn.query(sql, [`%${observation}%`]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getProductionByObservation, Erro: ${err}`);
@@ -266,7 +261,6 @@ export const getProductionByProductCategoryId = async (req: Request, res: Respon
                 pr.id_categoria = ?`;
 
         const [data] = await dbConn.query(sql, categoryId);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getProductionByObservation, Erro: ${err}`);

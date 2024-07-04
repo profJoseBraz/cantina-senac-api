@@ -13,13 +13,17 @@ export const getAllOrders = (_, res, dbConn) => __awaiter(void 0, void 0, void 0
     try {
         const sql = `
             select 
-                * 
+                p.id,
+                p.id_forma_pagamento,
+                p.nome_cliente,
+                p.data,
+                fp.id as id_forma_pagamento,
+                fp.nome as nome_forma_pagamento 
             from 
                 pedido p
             join forma_pagamento fp 
                 on fp.id = p.id_forma_pagamento `;
         const [data] = yield dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -37,7 +41,12 @@ export const getOrdersById = (req, res, dbConn) => __awaiter(void 0, void 0, voi
         const { id } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.id_forma_pagamento,
+                p.nome_cliente,
+                p.data,
+                fp.id as id_forma_pagamento,
+                fp.nome as nome_forma_pagamento 
             from 
                 pedido p
             join forma_pagamento fp 
@@ -45,7 +54,6 @@ export const getOrdersById = (req, res, dbConn) => __awaiter(void 0, void 0, voi
             where
                 p.id = ?`;
         const [data] = yield dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -63,7 +71,12 @@ export const getOrdersByPaymentMethodId = (req, res, dbConn) => __awaiter(void 0
         const { paymentMethodId } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.id_forma_pagamento,
+                p.nome_cliente,
+                p.data,
+                fp.id as id_forma_pagamento,
+                fp.nome as nome_forma_pagamento 
             from 
                 pedido p
             join forma_pagamento fp 
@@ -71,7 +84,6 @@ export const getOrdersByPaymentMethodId = (req, res, dbConn) => __awaiter(void 0
             where
                 fp.id = ?`;
         const [data] = yield dbConn.query(sql, [paymentMethodId]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -89,7 +101,12 @@ export const getOrdersByCustomerName = (req, res, dbConn) => __awaiter(void 0, v
         const { customerName } = req.query;
         const sql = `
             select 
-                * 
+                p.id,
+                p.id_forma_pagamento,
+                p.nome_cliente,
+                p.data,
+                fp.id as id_forma_pagamento,
+                fp.nome as nome_forma_pagamento 
             from 
                 pedido p
             join forma_pagamento fp 
@@ -97,7 +114,6 @@ export const getOrdersByCustomerName = (req, res, dbConn) => __awaiter(void 0, v
             where
                 p.nome_cliente like ?`;
         const [data] = yield dbConn.query(sql, [`${customerName}%`]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -117,7 +133,12 @@ export const getOrdersByDate = (req, res, dbConn) => __awaiter(void 0, void 0, v
         const sqlDate = `set @date := ?`;
         const sql = `
             select 
-                * 
+                p.id,
+                p.id_forma_pagamento,
+                p.nome_cliente,
+                p.data,
+                fp.id as id_forma_pagamento,
+                fp.nome as nome_forma_pagamento 
             from 
                 pedido p
             join forma_pagamento fp 
@@ -132,7 +153,6 @@ export const getOrdersByDate = (req, res, dbConn) => __awaiter(void 0, void 0, v
         yield dbConn.query(sqlOperator, [operator]);
         yield dbConn.query(sqlDate, [date]);
         const [data] = yield dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {

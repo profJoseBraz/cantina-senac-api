@@ -15,7 +15,6 @@ export const getAllCategories = (_, res, dbConn) => __awaiter(void 0, void 0, vo
             from 
                 categoria`;
         const [data] = yield dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {

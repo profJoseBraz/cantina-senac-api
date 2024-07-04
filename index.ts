@@ -6,6 +6,7 @@ import OrderRoutes from './src/routes/OrdersRoutes.js'
 import PaymentMethodRoutes from './src/routes/PaymentMethodRoutes.js'
 import ProductionRoutes from './src/routes/ProductionRoutes.js'
 import ProductRoutes from './src/routes/ProductRoutes.js'
+import RestrictionProductRoutes from './src/routes/RestrictionProductRoutes.js'
 
 const app = express();
 
@@ -24,7 +25,8 @@ app.use("/orderItems", OrderItemsRoutes);
 app.use("/orders", OrderRoutes);
 app.use("/paymentMethod", PaymentMethodRoutes);
 app.use("/production", ProductionRoutes);
-app.use("/products", ProductRoutes)
+app.use("/products", ProductRoutes);
+app.use("/restrictionProduct", RestrictionProductRoutes)
 
 const port = process.env.PORT || 8080;
 

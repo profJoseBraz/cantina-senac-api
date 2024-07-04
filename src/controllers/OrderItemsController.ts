@@ -17,7 +17,6 @@ export const getAllOrderItems = async (_: Request, res: Response, dbConn : mysql
                 on pr.id = ip.id_produto`;
 
         const [data] = await dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getAllOrderItems, Erro: ${err}`);
@@ -47,7 +46,6 @@ export const getOrderItemsById = async (req: Request, res: Response, dbConn : my
                 ip.id = ?`;
 
         const [data] = await dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getOrderItemsById, Erro: ${err}`);

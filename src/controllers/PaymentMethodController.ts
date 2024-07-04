@@ -11,7 +11,6 @@ export const getAllPaymentMethods = async (_: Request, res: Response, dbConn : m
                 forma_pagamento`;
 
         const [data] = await dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getAllPaymentMethods, Erro: ${err}`);
@@ -37,7 +36,6 @@ export const getPaymentMethodsById = async (req: Request, res: Response, dbConn 
                 id = ?`;
 
         const [data] = await dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getPaymentMethodsById, Erro: ${err}`);
@@ -63,7 +61,6 @@ export const getPaymentMethodsByName = async (req: Request, res: Response, dbCon
                 nome like ?`;
 
         const [data] = await dbConn.query(sql, [`${name}%`]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getPaymentMethodsByName, Erro: ${err}`);

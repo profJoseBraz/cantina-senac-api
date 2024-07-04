@@ -61,7 +61,6 @@ export const getProductionById = (req, res, dbConn) => __awaiter(void 0, void 0,
             where
                 p.id = ?`;
         const [data] = yield dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -96,7 +95,6 @@ export const getProductionByProductId = (req, res, dbConn) => __awaiter(void 0, 
             where
                 pr.id = ?`;
         const [data] = yield dbConn.query(sql, [productId]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -140,7 +138,6 @@ export const getProductionByDate = (req, res, dbConn) => __awaiter(void 0, void 
         yield dbConn.query(sqlOperator, [operator]);
         yield dbConn.query(sqlDate, [date]);
         const [data] = yield dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -184,7 +181,6 @@ export const getProductionByAmount = (req, res, dbConn) => __awaiter(void 0, voi
         yield dbConn.query(sqlOperator, [comparator]);
         yield dbConn.query(sqlAmount, [amount]);
         const [data] = yield dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -219,7 +215,6 @@ export const getProductionByObservation = (req, res, dbConn) => __awaiter(void 0
             where
                 p.observacao like ?`;
         const [data] = yield dbConn.query(sql, [`%${observation}%`]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -254,7 +249,6 @@ export const getProductionByProductCategoryId = (req, res, dbConn) => __awaiter(
             where
                 pr.id_categoria = ?`;
         const [data] = yield dbConn.query(sql, categoryId);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {

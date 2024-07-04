@@ -4,7 +4,10 @@ import {
     getProductsById,
     getProductsByCategoryId,
     getProductsByName,
-    getProductsByDescription
+    getProductsByDescription,
+    addProduct,
+    updateProduct,
+    deleteProduct
  } from '../controllers/ProductController.js';
 import { createNewConnection } from '../database/Db.js';
 import { TProduct } from '../types/model/Product.js';
@@ -37,5 +40,18 @@ router.get(
             return res.status(400).json({Message: err.message});
         }
     });
+
+router.post(
+    "/add",
+    async (req: Request, res: Response) => addProduct(req, res, await createNewConnection()));
+
+router.put(
+    "/update",
+    async (req: Request, res: Response) => updateProduct(req, res, await createNewConnection()));
+    
+router.delete(
+    "/delete",
+    async (req: Request, res: Response) => deleteProduct(req, res, await createNewConnection()));
+    
 
 export default router;

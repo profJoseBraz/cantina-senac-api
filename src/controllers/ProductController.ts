@@ -19,7 +19,6 @@ export const getAllProducts = async (_: Request, res: Response, dbConn : mysql.C
                 on c.id = p.id_categoria`;
 
         const [data] = await dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getAllProducts, Erro: ${err}`);
@@ -53,7 +52,6 @@ export const getProductsById = async (req: Request, res: Response, dbConn : mysq
                 p.id = ?`;
 
         const [data] = await dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getProductsById, Erro: ${err}`);
@@ -87,7 +85,6 @@ export const getProductsByCategoryId = async (req: Request, res: Response, dbCon
                 c.id = ?`;
 
         const [data] = await dbConn.query(sql, [categoryId]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getProductsById, Erro: ${err}`);
@@ -121,7 +118,6 @@ export const getProductsByName = async (req: Request, res: Response, dbConn : my
                 p.nome like ?`;
 
         const [data] = await dbConn.query(sql, [`${name}%`]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getProductsByName, Erro: ${err}`);
@@ -155,12 +151,122 @@ export const getProductsByDescription = async (req: Request, res: Response, dbCo
                 p.descricao like ?`;
 
         const [data] = await dbConn.query(sql, [`${description}%`]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getProductsByDescription, Erro: ${err}`);
         return res.status(500).json(err);
     } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const addProduct = async (req: Request, res: Response, dbConn : mysql.Connection) => {
+    try{
+        const {
+            categoryId,
+            name,
+            description,
+            value,
+            image
+        } = req.body;
+
+        const sql =
+            `
+            insert into produto 
+                (
+                    id_categoria, 
+                    nome, 
+                    descricao, 
+                    valor, 
+                    imagem
+                )
+            values
+                (
+                    ?, 
+                    ?, 
+                    ?, 
+                    ?,
+                    ?
+                )`;
+
+        dbConn.beginTransaction();
+
+        await dbConn.query(sql, [categoryId, name, description, value, image]);
+
+        await dbConn.commit();
+
+        res.status(201).json({ message: "Novo produto adicionado." });
+    }catch(err){
+        console.log(`Endpoint: addProduct, Erro: ${err}`);
+        return res.status(500).json(err);
+    }finally{
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const updateProduct = async (req: Request, res: Response, dbConn : mysql.Connection) => {
+    try{
+        const { id } = req.query;
+        
+        const {
+            categoryId,
+            name,
+            description,
+            value,
+            image
+        } = req.body;
+
+        const sql =
+            `
+            update produto set
+                id_categoria = ?, 
+                nome = ?, 
+                descricao = ?, 
+                valor = ?, 
+                imagem = ?
+            where
+                id = ?`;
+
+        dbConn.beginTransaction();
+
+        await dbConn.query(sql, [categoryId, name, description, value, image, id]);
+
+        await dbConn.commit();
+
+        res.status(200).json({ message: "Produto alterado com sucesso." });
+    }catch(err){
+        console.log(`Endpoint: updateProduct, Erro: ${err}`);
+        return res.status(500).json(err);
+    }finally{
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
+export const deleteProduct = async (req: Request, res: Response, dbConn : mysql.Connection) => {
+    try{
+        const { id } = req.query;
+
+        const sql =
+            `
+            delete from produto where id = ?`;
+
+        dbConn.beginTransaction();
+
+        await dbConn.query(sql, [id]);
+
+        await dbConn.commit();
+
+        res.status(200).json({ message: "Produto removido com sucesso." });
+    }catch(err){
+        console.log(`Endpoint: deleteProduct, Erro: ${err}`);
+        return res.status(500).json(err);
+    }finally{
         if(dbConn){
             dbConn.end();
         }

@@ -38,7 +38,6 @@ export const getCategoriesById = (req, res, dbConn) => __awaiter(void 0, void 0,
             where 
                 id = ?`;
         const [data] = yield dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -62,7 +61,6 @@ export const getCategoriesByName = (req, res, dbConn) => __awaiter(void 0, void 
             where 
                 nome like ?`;
         const [data] = yield dbConn.query(sql, [`${name}%`]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {

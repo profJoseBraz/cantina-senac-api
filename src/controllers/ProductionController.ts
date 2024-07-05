@@ -22,7 +22,6 @@ export const getAllProduction = async (_: Request, res: Response, dbConn : mysql
                 on pr.id = p.id_produto`;
 
         const [data] = await dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getAllProduction, Erro: ${err}`);

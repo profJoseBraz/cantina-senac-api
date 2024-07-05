@@ -73,7 +73,6 @@ export const getOrderItemsByOrderId = (req, res, dbConn) => __awaiter(void 0, vo
             where
                 p.id like ?`;
         const [data] = yield dbConn.query(sql, [orderId]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -101,7 +100,6 @@ export const getOrderItemsByProductId = (req, res, dbConn) => __awaiter(void 0, 
             where
                 pr.id like ?`;
         const [data] = yield dbConn.query(sql, [productId]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {
@@ -136,7 +134,6 @@ export const getOrderItemsTotalById = (req, res, dbConn) => __awaiter(void 0, vo
                 p.id,
                 p.nome_cliente`;
         const [data] = yield dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {

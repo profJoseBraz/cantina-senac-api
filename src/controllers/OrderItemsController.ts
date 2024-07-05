@@ -74,7 +74,6 @@ export const getOrderItemsByOrderId = async (req: Request, res: Response, dbConn
                 p.id like ?`;
 
         const [data] = await dbConn.query(sql, [orderId]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getOrderItemsByOrderId, Erro: ${err}`);
@@ -104,7 +103,6 @@ export const getOrderItemsByProductId = async (req: Request, res: Response, dbCo
                 pr.id like ?`;
 
         const [data] = await dbConn.query(sql, [productId]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getOrderItemsByProductId, Erro: ${err}`);
@@ -141,7 +139,6 @@ export const getOrderItemsTotalById = async (req: Request, res: Response, dbConn
                 p.nome_cliente`;
 
         const [data] = await dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getOrderItemsByProductId, Erro: ${err}`);

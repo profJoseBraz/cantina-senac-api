@@ -26,7 +26,6 @@ export const getAllProduction = (_, res, dbConn) => __awaiter(void 0, void 0, vo
             join produto pr
                 on pr.id = p.id_produto`;
         const [data] = yield dbConn.query(sql);
-        console.log(data);
         return res.status(200).json(data);
     }
     catch (err) {

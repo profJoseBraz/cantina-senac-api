@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import mysql from 'mysql2/promise';
-import { TProduct } from '../types/model/Product';
 import { TOrderItems } from '../types/model/OrderItems';
 
 export const getAllOrderItems = async (_: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {

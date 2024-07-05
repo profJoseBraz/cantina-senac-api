@@ -36,7 +36,6 @@ export const getCategoriesById = async (req: Request, res: Response, dbConn : my
                 id = ?`;
 
         const [data] = await dbConn.query(sql, [id]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getCategoriesById, Erro: ${err}`);
@@ -62,7 +61,6 @@ export const getCategoriesByName = async (req: Request, res: Response, dbConn : 
                 nome like ?`;
 
         const [data] = await dbConn.query(sql, [`${name}%`]);
-        console.log(data);
         return res.status(200).json(data);
     } catch (err) {
         console.log(`Endpoint: getCategoriesByName, Erro: ${err}`);

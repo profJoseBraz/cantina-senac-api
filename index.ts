@@ -7,6 +7,7 @@ import PaymentMethodRoutes from './src/routes/PaymentMethodRoutes.js'
 import ProductionRoutes from './src/routes/ProductionRoutes.js'
 import ProductRoutes from './src/routes/ProductRoutes.js'
 import RestrictionProductRoutes from './src/routes/RestrictionProductRoutes.js'
+import MainRoutes from './src/routes/MainRoutes.js'
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(cors({
     origin: allowedOrigins
 }));
 
+app.use("/", MainRoutes);
 app.use("/category", CategoryRoutes);
 app.use("/orderItems", OrderItemsRoutes);
 app.use("/orders", OrderRoutes);

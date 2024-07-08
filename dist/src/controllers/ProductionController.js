@@ -24,7 +24,9 @@ export const getAllProduction = (_, res, dbConn) => __awaiter(void 0, void 0, vo
             from
                 producao p
             join produto pr
-                on pr.id = p.id_produto`;
+                on pr.id = p.id_produto
+            order by
+                7`;
         const [data] = yield dbConn.query(sql);
         return res.status(200).json(data);
     }
@@ -133,7 +135,9 @@ export const getProductionByDate = (req, res, dbConn) => __awaiter(void 0, void 
                     when @operator = '<' then date(p.data) < @date
                     when @operator = '=' then date(p.data) = @date
                     else false
-                end`;
+                end
+            order by
+                7`;
         yield dbConn.query(sqlOperator, [operator]);
         yield dbConn.query(sqlDate, [date]);
         const [data] = yield dbConn.query(sql);
@@ -176,7 +180,9 @@ export const getProductionByAmount = (req, res, dbConn) => __awaiter(void 0, voi
                     when @operator = '<' then p.quantidade < @amount
                     when @operator = '=' then p.quantidade = @amount
                     else false
-                end`;
+                end
+            order by
+                7`;
         yield dbConn.query(sqlOperator, [comparator]);
         yield dbConn.query(sqlAmount, [amount]);
         const [data] = yield dbConn.query(sql);
@@ -212,7 +218,9 @@ export const getProductionByObservation = (req, res, dbConn) => __awaiter(void 0
             join produto pr
                 on pr.id = p.id_produto
             where
-                p.observacao like ?`;
+                p.observacao like ?
+            order by
+                7`;
         const [data] = yield dbConn.query(sql, [`%${observation}%`]);
         return res.status(200).json(data);
     }
@@ -246,7 +254,9 @@ export const getProductionByProductCategoryId = (req, res, dbConn) => __awaiter(
             join produto pr
                 on pr.id = p.id_produto
             where
-                pr.id_categoria = ?`;
+                pr.id_categoria = ?
+            order by
+                7`;
         const [data] = yield dbConn.query(sql, categoryId);
         return res.status(200).json(data);
     }

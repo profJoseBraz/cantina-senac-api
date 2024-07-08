@@ -19,7 +19,9 @@ export const getAllProduction = async (_: Request, res: Response, dbConn : mysql
             from
                 producao p
             join produto pr
-                on pr.id = p.id_produto`;
+                on pr.id = p.id_produto
+            order by
+                7`;
 
         const [data] = await dbConn.query(sql);
         return res.status(200).json(data);
@@ -136,7 +138,9 @@ export const getProductionByDate = async (req: Request, res: Response, dbConn : 
                     when @operator = '<' then date(p.data) < @date
                     when @operator = '=' then date(p.data) = @date
                     else false
-                end`;
+                end
+            order by
+                7`;
 
         await dbConn.query(sqlOperator, [operator]);
         await dbConn.query(sqlDate, [date]);
@@ -183,7 +187,9 @@ export const getProductionByAmount = async (req: Request, res: Response, dbConn 
                     when @operator = '<' then p.quantidade < @amount
                     when @operator = '=' then p.quantidade = @amount
                     else false
-                end`;
+                end
+            order by
+                7`;
 
         await dbConn.query(sqlOperator, [comparator]);
         await dbConn.query(sqlAmount, [amount]);
@@ -221,7 +227,9 @@ export const getProductionByObservation = async (req: Request, res: Response, db
             join produto pr
                 on pr.id = p.id_produto
             where
-                p.observacao like ?`;
+                p.observacao like ?
+            order by
+                7`;
 
         const [data] = await dbConn.query(sql, [`%${observation}%`]);
         return res.status(200).json(data);
@@ -257,7 +265,9 @@ export const getProductionByProductCategoryId = async (req: Request, res: Respon
             join produto pr
                 on pr.id = p.id_produto
             where
-                pr.id_categoria = ?`;
+                pr.id_categoria = ?
+            order by
+                7`;
 
         const [data] = await dbConn.query(sql, categoryId);
         return res.status(200).json(data);

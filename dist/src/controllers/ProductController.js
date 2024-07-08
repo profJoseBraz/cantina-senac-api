@@ -21,7 +21,9 @@ export const getAllProducts = (_, res, dbConn) => __awaiter(void 0, void 0, void
             from 
                 produto p
             join categoria c 
-                on c.id = p.id_categoria`;
+                on c.id = p.id_categoria
+            order by
+                2`;
         const [data] = yield dbConn.query(sql);
         return res.status(200).json(data);
     }
@@ -83,7 +85,9 @@ export const getProductsByCategoryId = (req, res, dbConn) => __awaiter(void 0, v
             join categoria c 
                 on c.id = p.id_categoria
             where
-                c.id = ?`;
+                c.id = ?
+            order by
+                2`;
         const [data] = yield dbConn.query(sql, [categoryId]);
         return res.status(200).json(data);
     }
@@ -114,7 +118,9 @@ export const getProductsByName = (req, res, dbConn) => __awaiter(void 0, void 0,
             join categoria c 
                 on c.id = p.id_categoria
             where
-                p.nome like ?`;
+                p.nome like ?
+            order by
+                2`;
         const [data] = yield dbConn.query(sql, [`${name}%`]);
         return res.status(200).json(data);
     }
@@ -145,7 +151,9 @@ export const getProductsByDescription = (req, res, dbConn) => __awaiter(void 0, 
             join categoria c 
                 on c.id = p.id_categoria
             where
-                p.descricao like ?`;
+                p.descricao like ?
+            order by
+                2`;
         const [data] = yield dbConn.query(sql, [`${description}%`]);
         return res.status(200).json(data);
     }

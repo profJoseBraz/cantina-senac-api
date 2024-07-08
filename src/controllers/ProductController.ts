@@ -16,7 +16,9 @@ export const getAllProducts = async (_: Request, res: Response, dbConn : mysql.C
             from 
                 produto p
             join categoria c 
-                on c.id = p.id_categoria`;
+                on c.id = p.id_categoria
+            order by
+                2`;
 
         const [data] = await dbConn.query(sql);
         return res.status(200).json(data);
@@ -82,7 +84,9 @@ export const getProductsByCategoryId = async (req: Request, res: Response, dbCon
             join categoria c 
                 on c.id = p.id_categoria
             where
-                c.id = ?`;
+                c.id = ?
+            order by
+                2`;
 
         const [data] = await dbConn.query(sql, [categoryId]);
         return res.status(200).json(data);
@@ -115,7 +119,9 @@ export const getProductsByName = async (req: Request, res: Response, dbConn : my
             join categoria c 
                 on c.id = p.id_categoria
             where
-                p.nome like ?`;
+                p.nome like ?
+            order by
+                2`;
 
         const [data] = await dbConn.query(sql, [`${name}%`]);
         return res.status(200).json(data);
@@ -148,7 +154,9 @@ export const getProductsByDescription = async (req: Request, res: Response, dbCo
             join categoria c 
                 on c.id = p.id_categoria
             where
-                p.descricao like ?`;
+                p.descricao like ?
+            order by
+                2`;
 
         const [data] = await dbConn.query(sql, [`${description}%`]);
         return res.status(200).json(data);

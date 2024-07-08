@@ -7,7 +7,19 @@ export const getAllOrderItems = async (_: Request, res: Response, dbConn : mysql
         const sql = 
             `
             select 
-                * 
+                ip.id,
+                ip.quantidade,
+                p.id as id_pedido,
+                p.id_forma_pagamento as id_forma_pagamento_pedido,
+                p.nome_cliente as nome_cliente_pedido,
+                date_format(date(p.data), '%d/%m/%Y') as data_pedido,
+                time(p.data) as hora_pedido,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto
             from 
                 itens_pedido ip
             join pedido p
@@ -34,7 +46,19 @@ export const getOrderItemsById = async (req: Request, res: Response, dbConn : my
         const sql = 
             `
             select 
-                * 
+                ip.id,
+                ip.quantidade,
+                p.id as id_pedido,
+                p.id_forma_pagamento as id_forma_pagamento_pedido,
+                p.nome_cliente as nome_cliente_pedido,
+                date_format(date(p.data), '%d/%m/%Y') as data_pedido,
+                time(p.data) as hora_pedido,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from 
                 itens_pedido ip
             join pedido p
@@ -63,7 +87,19 @@ export const getOrderItemsByOrderId = async (req: Request, res: Response, dbConn
         const sql = 
             `
             select 
-                * 
+                ip.id,
+                ip.quantidade,
+                p.id as id_pedido,
+                p.id_forma_pagamento as id_forma_pagamento_pedido,
+                p.nome_cliente as nome_cliente_pedido,
+                date_format(date(p.data), '%d/%m/%Y') as data_pedido,
+                time(p.data) as hora_pedido,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from 
                 itens_pedido ip
             join pedido p
@@ -92,7 +128,19 @@ export const getOrderItemsByProductId = async (req: Request, res: Response, dbCo
         const sql = 
             `
             select 
-                * 
+                ip.id,
+                ip.quantidade,
+                p.id as id_pedido,
+                p.id_forma_pagamento as id_forma_pagamento_pedido,
+                p.nome_cliente as nome_cliente_pedido,
+                date_format(date(p.data), '%d/%m/%Y') as data_pedido,
+                time(p.data) as hora_pedido,
+                pr.id as id_produto,
+                pr.id_categoria as id_categoria_produto,
+                pr.nome as nome_produto,
+                pr.descricao as descricao_produto,
+                pr.valor as valor_produto,
+                pr.imagem as imagem_produto 
             from 
                 itens_pedido ip
             join pedido p

@@ -16,13 +16,14 @@ export const getAllOrders = (_, res, dbConn) => __awaiter(void 0, void 0, void 0
                 p.id,
                 p.id_forma_pagamento,
                 p.nome_cliente,
-                p.data,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
                 fp.id as id_forma_pagamento,
                 fp.nome as nome_forma_pagamento 
             from 
                 pedido p
             join forma_pagamento fp 
-                on fp.id = p.id_forma_pagamento `;
+                on fp.id = p.id_forma_pagamento`;
         const [data] = yield dbConn.query(sql);
         return res.status(200).json(data);
     }
@@ -44,7 +45,8 @@ export const getOrdersById = (req, res, dbConn) => __awaiter(void 0, void 0, voi
                 p.id,
                 p.id_forma_pagamento,
                 p.nome_cliente,
-                p.data,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
                 fp.id as id_forma_pagamento,
                 fp.nome as nome_forma_pagamento 
             from 
@@ -74,7 +76,8 @@ export const getOrdersByPaymentMethodId = (req, res, dbConn) => __awaiter(void 0
                 p.id,
                 p.id_forma_pagamento,
                 p.nome_cliente,
-                p.data,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
                 fp.id as id_forma_pagamento,
                 fp.nome as nome_forma_pagamento 
             from 
@@ -104,7 +107,8 @@ export const getOrdersByCustomerName = (req, res, dbConn) => __awaiter(void 0, v
                 p.id,
                 p.id_forma_pagamento,
                 p.nome_cliente,
-                p.data,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
                 fp.id as id_forma_pagamento,
                 fp.nome as nome_forma_pagamento 
             from 
@@ -136,7 +140,8 @@ export const getOrdersByDate = (req, res, dbConn) => __awaiter(void 0, void 0, v
                 p.id,
                 p.id_forma_pagamento,
                 p.nome_cliente,
-                p.data,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
                 fp.id as id_forma_pagamento,
                 fp.nome as nome_forma_pagamento 
             from 

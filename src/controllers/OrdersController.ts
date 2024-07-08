@@ -11,13 +11,14 @@ export const getAllOrders = async (_: Request, res: Response, dbConn : mysql.Con
                 p.id,
                 p.id_forma_pagamento,
                 p.nome_cliente,
-                p.data,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
                 fp.id as id_forma_pagamento,
                 fp.nome as nome_forma_pagamento 
             from 
                 pedido p
             join forma_pagamento fp 
-                on fp.id = p.id_forma_pagamento `;
+                on fp.id = p.id_forma_pagamento`;
 
         const [data] = await dbConn.query(sql);
         return res.status(200).json(data);
@@ -41,7 +42,8 @@ export const getOrdersById = async (req: Request, res: Response, dbConn : mysql.
                 p.id,
                 p.id_forma_pagamento,
                 p.nome_cliente,
-                p.data,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
                 fp.id as id_forma_pagamento,
                 fp.nome as nome_forma_pagamento 
             from 
@@ -73,7 +75,8 @@ export const getOrdersByPaymentMethodId = async (req: Request, res: Response, db
                 p.id,
                 p.id_forma_pagamento,
                 p.nome_cliente,
-                p.data,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
                 fp.id as id_forma_pagamento,
                 fp.nome as nome_forma_pagamento 
             from 
@@ -105,7 +108,8 @@ export const getOrdersByCustomerName = async (req: Request, res: Response, dbCon
                 p.id,
                 p.id_forma_pagamento,
                 p.nome_cliente,
-                p.data,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
                 fp.id as id_forma_pagamento,
                 fp.nome as nome_forma_pagamento 
             from 
@@ -141,7 +145,8 @@ export const getOrdersByDate = async (req: Request, res: Response, dbConn : mysq
                 p.id,
                 p.id_forma_pagamento,
                 p.nome_cliente,
-                p.data,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora,
                 fp.id as id_forma_pagamento,
                 fp.nome as nome_forma_pagamento 
             from 

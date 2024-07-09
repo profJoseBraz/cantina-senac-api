@@ -14,12 +14,13 @@ export const getAllOrders = (_, res, dbConn) => __awaiter(void 0, void 0, void 0
         const sql = `
             select 
                 p.id,
-                p.id_forma_pagamento,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
                 p.nome_cliente,
                 date_format(date(p.data), '%d/%m/%Y') as data,
-                time(p.data) as hora,
-                fp.id as id_forma_pagamento,
-                fp.nome as nome_forma_pagamento 
+                time(p.data) as hora
             from 
                 pedido p
             join forma_pagamento fp 
@@ -43,12 +44,13 @@ export const getOrdersById = (req, res, dbConn) => __awaiter(void 0, void 0, voi
         const sql = `
             select 
                 p.id,
-                p.id_forma_pagamento,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
                 p.nome_cliente,
                 date_format(date(p.data), '%d/%m/%Y') as data,
-                time(p.data) as hora,
-                fp.id as id_forma_pagamento,
-                fp.nome as nome_forma_pagamento 
+                time(p.data) as hora
             from 
                 pedido p
             join forma_pagamento fp 
@@ -74,12 +76,13 @@ export const getOrdersByPaymentMethodId = (req, res, dbConn) => __awaiter(void 0
         const sql = `
             select 
                 p.id,
-                p.id_forma_pagamento,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
                 p.nome_cliente,
                 date_format(date(p.data), '%d/%m/%Y') as data,
-                time(p.data) as hora,
-                fp.id as id_forma_pagamento,
-                fp.nome as nome_forma_pagamento 
+                time(p.data) as hora
             from 
                 pedido p
             join forma_pagamento fp 
@@ -105,12 +108,13 @@ export const getOrdersByCustomerName = (req, res, dbConn) => __awaiter(void 0, v
         const sql = `
             select 
                 p.id,
-                p.id_forma_pagamento,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
                 p.nome_cliente,
                 date_format(date(p.data), '%d/%m/%Y') as data,
-                time(p.data) as hora,
-                fp.id as id_forma_pagamento,
-                fp.nome as nome_forma_pagamento 
+                time(p.data) as hora
             from 
                 pedido p
             join forma_pagamento fp 
@@ -138,12 +142,13 @@ export const getOrdersByDate = (req, res, dbConn) => __awaiter(void 0, void 0, v
         const sql = `
             select 
                 p.id,
-                p.id_forma_pagamento,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
                 p.nome_cliente,
                 date_format(date(p.data), '%d/%m/%Y') as data,
-                time(p.data) as hora,
-                fp.id as id_forma_pagamento,
-                fp.nome as nome_forma_pagamento 
+                time(p.data) as hora
             from 
                 pedido p
             join forma_pagamento fp 

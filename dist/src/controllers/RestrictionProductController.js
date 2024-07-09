@@ -12,21 +12,30 @@ export const getAllRestrictionProduct = (_, res, dbConn) => __awaiter(void 0, vo
         const sql = `
             select
                 rp.id,
-                p.id as id_produto,
-                p.id_categoria as id_categoria_produto,
-                p.nome as nome_produto,
-                p.descricao as descricao_produto,
-                p.valor as valor_produto,
-                p.imagem as imagem_produto,
-                r.id as id_restricao,
-                r.nome as nome_restricao,
-                r.descricao as descricao_restricao
+                json_object(
+                    'id', p.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', p.nome,
+                'descricao', p.descricao,
+                'valor', p.valor,
+                'imagem', p.imagem 
+                ) as produto,
+                json_object(
+                    'id', r.id,
+                    'nome', r.nome,
+                    'descricao', r.descricao 
+                ) as restricao
             from
                 restricao_produto rp
             join produto p
                 on p.id = rp.id_produto
             join restricao r
-                on r.id =rp.id_retricao `;
+                on r.id = rp.id_retricao
+            join categoria c 
+                on c.id = p.id_categoria`;
         const [data] = yield dbConn.query(sql);
         return res.status(200).json(data);
     }
@@ -46,21 +55,30 @@ export const getRestrictionProductByRestrictionId = (req, res, dbConn) => __awai
         const sql = `
             select
                 rp.id,
-                p.id as id_produto,
-                p.id_categoria as id_categoria_produto,
-                p.nome as nome_produto,
-                p.descricao as descricao_produto,
-                p.valor as valor_produto,
-                p.imagem as imagem_produto,
-                r.id as id_restricao,
-                r.nome as nome_restricao,
-                r.descricao as descricao_restricao
+                json_object(
+                    'id', p.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', p.nome,
+                'descricao', p.descricao,
+                'valor', p.valor,
+                'imagem', p.imagem 
+                ) as produto,
+                json_object(
+                    'id', r.id,
+                    'nome', r.nome,
+                    'descricao', r.descricao 
+                ) as restricao
             from
                 restricao_produto rp
             join produto p
                 on p.id = rp.id_produto
             join restricao r
-                on r.id =rp.id_retricao
+                on r.id = rp.id_retricao
+            join categoria c 
+                on c.id = p.id_categoria
             where
                 r.id = ?`;
         const [data] = yield dbConn.query(sql, [restrictionId]);
@@ -82,21 +100,30 @@ export const getRestrictionProductByProductId = (req, res, dbConn) => __awaiter(
         const sql = `
             select
                 rp.id,
-                p.id as id_produto,
-                p.id_categoria as id_categoria_produto,
-                p.nome as nome_produto,
-                p.descricao as descricao_produto,
-                p.valor as valor_produto,
-                p.imagem as imagem_produto,
-                r.id as id_restricao,
-                r.nome as nome_restricao,
-                r.descricao as descricao_restricao
+                json_object(
+                    'id', p.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', p.nome,
+                'descricao', p.descricao,
+                'valor', p.valor,
+                'imagem', p.imagem 
+                ) as produto,
+                json_object(
+                    'id', r.id,
+                    'nome', r.nome,
+                    'descricao', r.descricao 
+                ) as restricao
             from
                 restricao_produto rp
             join produto p
                 on p.id = rp.id_produto
             join restricao r
-                on r.id =rp.id_retricao
+                on r.id = rp.id_retricao
+            join categoria c 
+                on c.id = p.id_categoria
             where
                 p.id = ?`;
         const [data] = yield dbConn.query(sql, [productId]);

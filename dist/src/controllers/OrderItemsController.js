@@ -12,24 +12,37 @@ export const getAllOrderItems = (_, res, dbConn) => __awaiter(void 0, void 0, vo
         const sql = `
             select 
                 ip.id,
-                ip.quantidade,
-                p.id as id_pedido,
-                p.id_forma_pagamento as id_forma_pagamento_pedido,
-                p.nome_cliente as nome_cliente_pedido,
-                date_format(date(p.data), '%d/%m/%Y') as data_pedido,
-                time(p.data) as hora_pedido,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto
+                json_object(
+                    'id', p.id, 
+                    'forma_pagamento', json_object(
+                        'id', fp.id, 
+                        'nome', fp.nome 
+                    ),
+                    'cliente', p.nome_cliente,
+                    'data', p.data
+                ) as pedido,
+                json_object(
+                    'id', pr.id,
+                    'categoria', json_object(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                    'nome', pr.nome,
+                    'descricao', pr.descricao,
+                    'valor', pr.valor,
+                    'imagem', pr.imagem 
+                ) as produto,
+                ip.quantidade 
             from 
                 itens_pedido ip
             join pedido p
                 on p.id = ip.id_pedido 
             join produto pr
-                on pr.id = ip.id_produto`;
+                on pr.id = ip.id_produto
+            join forma_pagamento fp 
+                on fp.id = p.id_forma_pagamento 
+            join categoria c
+                on c.id = pr.id_categoria`;
         const [data] = yield dbConn.query(sql);
         return res.status(200).json(data);
     }
@@ -49,24 +62,37 @@ export const getOrderItemsById = (req, res, dbConn) => __awaiter(void 0, void 0,
         const sql = `
             select 
                 ip.id,
-                ip.quantidade,
-                p.id as id_pedido,
-                p.id_forma_pagamento as id_forma_pagamento_pedido,
-                p.nome_cliente as nome_cliente_pedido,
-                date_format(date(p.data), '%d/%m/%Y') as data_pedido,
-                time(p.data) as hora_pedido,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto 
+                json_object(
+                    'id', p.id, 
+                    'forma_pagamento', json_object(
+                        'id', fp.id, 
+                        'nome', fp.nome 
+                    ),
+                    'cliente', p.nome_cliente,
+                    'data', p.data
+                ) as pedido,
+                json_object(
+                    'id', pr.id,
+                    'categoria', json_object(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                    'nome', pr.nome,
+                    'descricao', pr.descricao,
+                    'valor', pr.valor,
+                    'imagem', pr.imagem 
+                ) as produto,
+                ip.quantidade 
             from 
                 itens_pedido ip
             join pedido p
                 on p.id = ip.id_pedido 
             join produto pr
                 on pr.id = ip.id_produto
+            join forma_pagamento fp 
+                on fp.id = p.id_forma_pagamento 
+            join categoria c
+                on c.id = pr.id_categoria
             where
                 ip.id = ?`;
         const [data] = yield dbConn.query(sql, [id]);
@@ -88,24 +114,37 @@ export const getOrderItemsByOrderId = (req, res, dbConn) => __awaiter(void 0, vo
         const sql = `
             select 
                 ip.id,
-                ip.quantidade,
-                p.id as id_pedido,
-                p.id_forma_pagamento as id_forma_pagamento_pedido,
-                p.nome_cliente as nome_cliente_pedido,
-                date_format(date(p.data), '%d/%m/%Y') as data_pedido,
-                time(p.data) as hora_pedido,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto 
+                json_object(
+                    'id', p.id, 
+                    'forma_pagamento', json_object(
+                        'id', fp.id, 
+                        'nome', fp.nome 
+                    ),
+                    'cliente', p.nome_cliente,
+                    'data', p.data
+                ) as pedido,
+                json_object(
+                    'id', pr.id,
+                    'categoria', json_object(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                    'nome', pr.nome,
+                    'descricao', pr.descricao,
+                    'valor', pr.valor,
+                    'imagem', pr.imagem 
+                ) as produto,
+                ip.quantidade 
             from 
                 itens_pedido ip
             join pedido p
                 on p.id = ip.id_pedido 
             join produto pr
                 on pr.id = ip.id_produto
+            join forma_pagamento fp 
+                on fp.id = p.id_forma_pagamento 
+            join categoria c
+                on c.id = pr.id_categoria
             where
                 p.id like ?`;
         const [data] = yield dbConn.query(sql, [orderId]);
@@ -127,24 +166,37 @@ export const getOrderItemsByProductId = (req, res, dbConn) => __awaiter(void 0, 
         const sql = `
             select 
                 ip.id,
-                ip.quantidade,
-                p.id as id_pedido,
-                p.id_forma_pagamento as id_forma_pagamento_pedido,
-                p.nome_cliente as nome_cliente_pedido,
-                date_format(date(p.data), '%d/%m/%Y') as data_pedido,
-                time(p.data) as hora_pedido,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto 
+                json_object(
+                    'id', p.id, 
+                    'forma_pagamento', json_object(
+                        'id', fp.id, 
+                        'nome', fp.nome 
+                    ),
+                    'cliente', p.nome_cliente,
+                    'data', p.data
+                ) as pedido,
+                json_object(
+                    'id', pr.id,
+                    'categoria', json_object(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                    'nome', pr.nome,
+                    'descricao', pr.descricao,
+                    'valor', pr.valor,
+                    'imagem', pr.imagem 
+                ) as produto,
+                ip.quantidade 
             from 
                 itens_pedido ip
             join pedido p
                 on p.id = ip.id_pedido 
             join produto pr
                 on pr.id = ip.id_produto
+            join forma_pagamento fp 
+                on fp.id = p.id_forma_pagamento 
+            join categoria c
+                on c.id = pr.id_categoria
             where
                 pr.id like ?`;
         const [data] = yield dbConn.query(sql, [productId]);

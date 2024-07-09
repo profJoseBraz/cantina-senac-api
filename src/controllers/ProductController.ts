@@ -109,7 +109,10 @@ export const getProductsByName = async (req: Request, res: Response, dbConn : my
                 p.descricao,
                 p.valor,
                 p.imagem,
-                json_object('id', c.id, 'nome', c.nome) as categoria 
+                json_object(
+                    'id', c.id, 
+                    'nome', c.nome
+                ) as categoria 
             from 
                 produto p
             join categoria c 
@@ -143,7 +146,10 @@ export const getProductsByDescription = async (req: Request, res: Response, dbCo
                 p.descricao,
                 p.valor,
                 p.imagem,
-                json_object('id', c.id, 'nome', c.nome) as categoria 
+                json_object(
+                    'id', c.id, 
+                    'nome', c.nome
+                ) as categoria 
             from 
                 produto p
             join categoria c 

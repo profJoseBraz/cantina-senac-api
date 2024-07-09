@@ -9,12 +9,13 @@ export const getAllOrders = async (_: Request, res: Response, dbConn : mysql.Con
             `
             select 
                 p.id,
-                p.id_forma_pagamento,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
                 p.nome_cliente,
                 date_format(date(p.data), '%d/%m/%Y') as data,
-                time(p.data) as hora,
-                fp.id as id_forma_pagamento,
-                fp.nome as nome_forma_pagamento 
+                time(p.data) as hora
             from 
                 pedido p
             join forma_pagamento fp 
@@ -40,12 +41,13 @@ export const getOrdersById = async (req: Request, res: Response, dbConn : mysql.
             `
             select 
                 p.id,
-                p.id_forma_pagamento,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
                 p.nome_cliente,
                 date_format(date(p.data), '%d/%m/%Y') as data,
-                time(p.data) as hora,
-                fp.id as id_forma_pagamento,
-                fp.nome as nome_forma_pagamento 
+                time(p.data) as hora
             from 
                 pedido p
             join forma_pagamento fp 
@@ -73,12 +75,13 @@ export const getOrdersByPaymentMethodId = async (req: Request, res: Response, db
             `
             select 
                 p.id,
-                p.id_forma_pagamento,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
                 p.nome_cliente,
                 date_format(date(p.data), '%d/%m/%Y') as data,
-                time(p.data) as hora,
-                fp.id as id_forma_pagamento,
-                fp.nome as nome_forma_pagamento 
+                time(p.data) as hora
             from 
                 pedido p
             join forma_pagamento fp 
@@ -106,12 +109,13 @@ export const getOrdersByCustomerName = async (req: Request, res: Response, dbCon
             `
             select 
                 p.id,
-                p.id_forma_pagamento,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
                 p.nome_cliente,
                 date_format(date(p.data), '%d/%m/%Y') as data,
-                time(p.data) as hora,
-                fp.id as id_forma_pagamento,
-                fp.nome as nome_forma_pagamento 
+                time(p.data) as hora
             from 
                 pedido p
             join forma_pagamento fp 
@@ -143,12 +147,13 @@ export const getOrdersByDate = async (req: Request, res: Response, dbConn : mysq
             `
             select 
                 p.id,
-                p.id_forma_pagamento,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
                 p.nome_cliente,
                 date_format(date(p.data), '%d/%m/%Y') as data,
-                time(p.data) as hora,
-                fp.id as id_forma_pagamento,
-                fp.nome as nome_forma_pagamento 
+                time(p.data) as hora
             from 
                 pedido p
             join forma_pagamento fp 

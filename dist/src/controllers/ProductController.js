@@ -108,7 +108,10 @@ export const getProductsByName = (req, res, dbConn) => __awaiter(void 0, void 0,
                 p.descricao,
                 p.valor,
                 p.imagem,
-                json_object('id', c.id, 'nome', c.nome) as categoria 
+                json_object(
+                    'id', c.id, 
+                    'nome', c.nome
+                ) as categoria 
             from 
                 produto p
             join categoria c 
@@ -140,7 +143,10 @@ export const getProductsByDescription = (req, res, dbConn) => __awaiter(void 0, 
                 p.descricao,
                 p.valor,
                 p.imagem,
-                json_object('id', c.id, 'nome', c.nome) as categoria 
+                json_object(
+                    'id', c.id, 
+                    'nome', c.nome
+                ) as categoria 
             from 
                 produto p
             join categoria c 

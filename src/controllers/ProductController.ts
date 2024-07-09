@@ -11,8 +11,7 @@ export const getAllProducts = async (_: Request, res: Response, dbConn : mysql.C
                 p.descricao,
                 p.valor,
                 p.imagem,
-                c.id as id_categoria,
-                c.nome as nome_categoria
+                JSON_OBJECT('id', c.id, 'nome', c.nome) as categoria
             from 
                 produto p
             join categoria c 

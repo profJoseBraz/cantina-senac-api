@@ -16,8 +16,7 @@ export const getAllProducts = (_, res, dbConn) => __awaiter(void 0, void 0, void
                 p.descricao,
                 p.valor,
                 p.imagem,
-                c.id as id_categoria,
-                c.nome as nome_categoria
+                JSON_OBJECT('id', c.id, 'nome', c.nome) AS categoria
             from 
                 produto p
             join categoria c 

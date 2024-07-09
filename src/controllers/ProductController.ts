@@ -11,7 +11,7 @@ export const getAllProducts = async (_: Request, res: Response, dbConn : mysql.C
                 p.descricao,
                 p.valor,
                 p.imagem,
-                JSON_OBJECT('id', c.id, 'nome', c.nome) as categoria
+                json_object('id', c.id, 'nome', c.nome) as categoria
             from 
                 produto p
             join categoria c 
@@ -43,8 +43,7 @@ export const getProductsById = async (req: Request, res: Response, dbConn : mysq
                 p.descricao,
                 p.valor,
                 p.imagem,
-                c.id as id_categoria,
-                c.nome as nome_categoria 
+                json_object('id', c.id, 'nome', c.nome) as categoria 
             from 
                 produto p
             join categoria c 
@@ -76,8 +75,7 @@ export const getProductsByCategoryId = async (req: Request, res: Response, dbCon
                 p.descricao,
                 p.valor,
                 p.imagem,
-                c.id as id_categoria,
-                c.nome as nome_categoria 
+                json_object('id', c.id, 'nome', c.nome) as categoria 
             from 
                 produto p
             join categoria c 
@@ -111,8 +109,7 @@ export const getProductsByName = async (req: Request, res: Response, dbConn : my
                 p.descricao,
                 p.valor,
                 p.imagem,
-                c.id as id_categoria,
-                c.nome as nome_categoria 
+                json_object('id', c.id, 'nome', c.nome) as categoria 
             from 
                 produto p
             join categoria c 
@@ -146,8 +143,7 @@ export const getProductsByDescription = async (req: Request, res: Response, dbCo
                 p.descricao,
                 p.valor,
                 p.imagem,
-                c.id as id_categoria,
-                c.nome as nome_categoria 
+                json_object('id', c.id, 'nome', c.nome) as categoria 
             from 
                 produto p
             join categoria c 

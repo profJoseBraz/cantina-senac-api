@@ -5,23 +5,30 @@ export const getAllProduction = async (_: Request, res: Response, dbConn : mysql
     try {
         const sql = 
             `
-            select 
+            select
                 p.id,
+                json_object(
+                    'id', pr.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', pr.nome,
+                'descricao', pr.descricao,
+                'valor', pr.valor,
+                'imagem', pr.imagem 
+                ) as produto,
                 p.data,
                 p.quantidade,
-                p.observacao,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto 
+                p.observacao
             from
                 producao p
-            join produto pr
+            join produto pr 
                 on pr.id = p.id_produto
+            join categoria c 
+                on c.id = pr.id_categoria
             order by
-                7`;
+                pr.nome`;
 
         const [data] = await dbConn.query(sql);
         return res.status(200).json(data);
@@ -41,23 +48,32 @@ export const getProductionById = async (req: Request, res: Response, dbConn : my
 
         const sql = 
             `
-            select 
+            select
                 p.id,
+                json_object(
+                    'id', pr.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', pr.nome,
+                'descricao', pr.descricao,
+                'valor', pr.valor,
+                'imagem', pr.imagem 
+                ) as produto,
                 p.data,
                 p.quantidade,
-                p.observacao,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto 
+                p.observacao
             from
                 producao p
-            join produto pr
+            join produto pr 
                 on pr.id = p.id_produto
+            join categoria c 
+                on c.id = pr.id_categoria
             where
-                p.id = ?`;
+                p.id = ?
+            order by
+                pr.nome`;
 
         const [data] = await dbConn.query(sql, [id]);
         return res.status(200).json(data);
@@ -77,21 +93,28 @@ export const getProductionByProductId = async (req: Request, res: Response, dbCo
 
         const sql = 
             `
-            select 
+            select
                 p.id,
+                json_object(
+                    'id', pr.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', pr.nome,
+                'descricao', pr.descricao,
+                'valor', pr.valor,
+                'imagem', pr.imagem 
+                ) as produto,
                 p.data,
                 p.quantidade,
-                p.observacao,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto 
+                p.observacao
             from
                 producao p
-            join produto pr
+            join produto pr 
                 on pr.id = p.id_produto
+            join categoria c 
+                on c.id = pr.id_categoria
             where
                 pr.id = ?`;
 
@@ -117,21 +140,28 @@ export const getProductionByDate = async (req: Request, res: Response, dbConn : 
 
         const sql = 
             `
-            select 
+            select
                 p.id,
+                json_object(
+                    'id', pr.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', pr.nome,
+                'descricao', pr.descricao,
+                'valor', pr.valor,
+                'imagem', pr.imagem 
+                ) as produto,
                 p.data,
                 p.quantidade,
-                p.observacao,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto 
+                p.observacao
             from
                 producao p
-            join produto pr
+            join produto pr 
                 on pr.id = p.id_produto
+            join categoria c 
+                on c.id = pr.id_categoria
             where
                 case 
                     when @operator = '>' then date(p.data) > @date
@@ -140,7 +170,7 @@ export const getProductionByDate = async (req: Request, res: Response, dbConn : 
                     else false
                 end
             order by
-                7`;
+                pr.nome`;
 
         await dbConn.query(sqlOperator, [operator]);
         await dbConn.query(sqlDate, [date]);
@@ -166,21 +196,28 @@ export const getProductionByAmount = async (req: Request, res: Response, dbConn 
 
         const sql = 
             `
-            select 
+            select
                 p.id,
+                json_object(
+                    'id', pr.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', pr.nome,
+                'descricao', pr.descricao,
+                'valor', pr.valor,
+                'imagem', pr.imagem 
+                ) as produto,
                 p.data,
                 p.quantidade,
-                p.observacao,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto 
+                p.observacao
             from
                 producao p
-            join produto pr
+            join produto pr 
                 on pr.id = p.id_produto
+            join categoria c 
+                on c.id = pr.id_categoria
             where
                 case 
                     when @operator = '>' then p.quantidade > @amount
@@ -189,7 +226,7 @@ export const getProductionByAmount = async (req: Request, res: Response, dbConn 
                     else false
                 end
             order by
-                7`;
+                pr.nome`;
 
         await dbConn.query(sqlOperator, [comparator]);
         await dbConn.query(sqlAmount, [amount]);
@@ -211,25 +248,32 @@ export const getProductionByObservation = async (req: Request, res: Response, db
 
         const sql = 
             `
-            select 
+            select
                 p.id,
+                json_object(
+                    'id', pr.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', pr.nome,
+                'descricao', pr.descricao,
+                'valor', pr.valor,
+                'imagem', pr.imagem 
+                ) as produto,
                 p.data,
                 p.quantidade,
-                p.observacao,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto 
+                p.observacao
             from
                 producao p
-            join produto pr
+            join produto pr 
                 on pr.id = p.id_produto
+            join categoria c 
+                on c.id = pr.id_categoria
             where
                 p.observacao like ?
             order by
-                7`;
+                pr.nome`;
 
         const [data] = await dbConn.query(sql, [`%${observation}%`]);
         return res.status(200).json(data);
@@ -249,25 +293,32 @@ export const getProductionByProductCategoryId = async (req: Request, res: Respon
 
         const sql = 
             `
-            select 
+            select
                 p.id,
+                json_object(
+                    'id', pr.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', pr.nome,
+                'descricao', pr.descricao,
+                'valor', pr.valor,
+                'imagem', pr.imagem 
+                ) as produto,
                 p.data,
                 p.quantidade,
-                p.observacao,
-                pr.id as id_produto,
-                pr.id_categoria as id_categoria_produto,
-                pr.nome as nome_produto,
-                pr.descricao as descricao_produto,
-                pr.valor as valor_produto,
-                pr.imagem as imagem_produto 
+                p.observacao
             from
                 producao p
-            join produto pr
+            join produto pr 
                 on pr.id = p.id_produto
+            join categoria c 
+                on c.id = pr.id_categoria
             where
                 pr.id_categoria = ?
             order by
-                7`;
+                pr.nome`;
 
         const [data] = await dbConn.query(sql, categoryId);
         return res.status(200).json(data);

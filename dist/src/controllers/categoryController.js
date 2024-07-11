@@ -73,3 +73,33 @@ export const getCategoriesByName = (req, res, dbConn) => __awaiter(void 0, void 
         }
     }
 });
+export const add = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { name, } = req.body;
+        const sql = `
+            insert into categoria
+                (
+                    nome
+                )
+            values
+                (
+                    ?
+                )`;
+        dbConn.beginTransaction();
+        yield dbConn.query(sql, [name]);
+        yield dbConn.commit();
+        console.log(`Nova categoria cadastrada.`);
+        res.status(201).json({ message: "Nova categoria cadastrada." });
+    }
+    catch (err) {
+        if (dbConn) {
+            dbConn.rollback();
+        }
+        console.log(`Endpoint: add, Erro: ${err}`);
+    }
+    finally {
+        if (dbConn) {
+            dbConn.end();
+        }
+    }
+});

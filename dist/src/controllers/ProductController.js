@@ -168,6 +168,41 @@ export const getProductsByDescription = (req, res, dbConn) => __awaiter(void 0, 
         }
     }
 });
+export const getProductsByCategoryName = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { name } = req.query;
+        const sql = `
+            select 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                json_object(
+                    'id', c.id, 
+                    'nome', c.nome
+                ) as categoria 
+            from 
+                produto p
+            join categoria c 
+                on c.id = p.id_categoria
+            where
+                c.nome like ?
+            order by
+                2`;
+        const [data] = yield dbConn.query(sql, [`${name}%`]);
+        return res.status(200).json(data);
+    }
+    catch (err) {
+        console.log(`Endpoint: getProductsByDescription, Erro: ${err}`);
+        return res.status(500).json(err);
+    }
+    finally {
+        if (dbConn) {
+            dbConn.end();
+        }
+    }
+});
 export const addProduct = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { categoryId, name, description, value, image } = req.body;

@@ -71,3 +71,41 @@ export const getCategoriesByName = async (req: Request, res: Response, dbConn : 
         }
     }
 }
+
+export const add = async (req: Request, res: Response, dbConn : mysql.Connection) => {
+    try{
+        const { 
+            name,  
+        } = req.body;
+
+        const sql = 
+            `
+            insert into categoria
+                (
+                    nome
+                )
+            values
+                (
+                    ?
+                )`;
+        
+        dbConn.beginTransaction();
+
+        await dbConn.query(sql, [name]);
+
+        await dbConn.commit();
+
+        console.log(`Nova categoria cadastrada.`);
+        res.status(201).json({message: "Nova categoria cadastrada."})
+    }catch(err: any){
+        if(dbConn){
+            dbConn.rollback();
+        }
+
+        console.log(`Endpoint: add, Erro: ${err}`);
+    }finally{
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}

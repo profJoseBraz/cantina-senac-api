@@ -171,6 +171,43 @@ export const getProductsByDescription = async (req: Request, res: Response, dbCo
     }
 }
 
+export const getProductsByCategoryName = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { name } = req.query;
+
+        const sql = 
+            `
+            select 
+                p.id,
+                p.nome,
+                p.descricao,
+                p.valor,
+                p.imagem,
+                json_object(
+                    'id', c.id, 
+                    'nome', c.nome
+                ) as categoria 
+            from 
+                produto p
+            join categoria c 
+                on c.id = p.id_categoria
+            where
+                c.nome like ?
+            order by
+                2`;
+
+        const [data] = await dbConn.query(sql, [`${name}%`]);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`Endpoint: getProductsByDescription, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
 export const addProduct = async (req: Request, res: Response, dbConn : mysql.Connection) => {
     try{
         const {

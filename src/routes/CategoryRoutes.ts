@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { 
-    add,
+    addCategory,
     getAllCategories,
     getCategoriesById,
     getCategoriesByName } from '../controllers/CategoryController.js';
@@ -34,6 +34,6 @@ router.get(
 
 router.post(
     "/add", 
-    async (req: Request, res: Response) => add(req, res, await createNewConnection()));
+    async (req: Request, res: Response) => addCategory(req, res, await createNewConnection()));
 
 export default router;

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from 'express';
-import { getAllProduction, getProductionById, getProductionByProductId, getProductionByDate, getProductionByAmount, getProductionByProductCategoryId } from '../controllers/ProductionController.js';
+import { getAllProduction, getProductionById, getProductionByProductId, getProductionByDate, getProductionByAmount, getProductionByProductCategoryId, addProduction } from '../controllers/ProductionController.js';
 import { createNewConnection } from '../database/Db.js';
 const router = express.Router();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -49,4 +49,5 @@ router.get("/products", (req, res) => __awaiter(void 0, void 0, void 0, function
         return res.status(400).json({ Message: err.message });
     }
 }));
+router.post("/add", (req, res) => __awaiter(void 0, void 0, void 0, function* () { return addProduction(req, res, yield createNewConnection()); }));
 export default router;

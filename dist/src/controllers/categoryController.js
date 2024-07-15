@@ -73,7 +73,7 @@ export const getCategoriesByName = (req, res, dbConn) => __awaiter(void 0, void 
         }
     }
 });
-export const add = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+export const addCategory = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, } = req.body;
         const sql = `

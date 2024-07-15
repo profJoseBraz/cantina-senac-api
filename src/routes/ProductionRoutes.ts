@@ -5,7 +5,8 @@ import {
     getProductionByProductId,
     getProductionByDate,
     getProductionByAmount,
-    getProductionByProductCategoryId
+    getProductionByProductCategoryId,
+    addProduction
 } from '../controllers/ProductionController.js';
 import { createNewConnection } from '../database/Db.js';
 import { TProduction } from '../types/model/Production.js';
@@ -56,5 +57,9 @@ router.get(
             return res.status(400).json({Message: err.message});
         }
     });
+
+router.post(
+    "/add", 
+    async (req: Request, res: Response) => addProduction(req, res, await createNewConnection()));
 
 export default router;

@@ -72,7 +72,7 @@ export const getCategoriesByName = async (req: Request, res: Response, dbConn : 
     }
 }
 
-export const add = async (req: Request, res: Response, dbConn : mysql.Connection) => {
+export const addCategory = async (req: Request, res: Response, dbConn : mysql.Connection) => {
     try{
         const { 
             name,  

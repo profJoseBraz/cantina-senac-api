@@ -331,3 +331,46 @@ export const getProductionByProductCategoryId = async (req: Request, res: Respon
         }
     }
 }
+
+export const addProduction = async (req: Request, res: Response, dbConn : mysql.Connection) => {
+    try{
+        const {
+            productId,
+            date,
+            amount,
+            observation
+        } = req.body;
+
+        const sql =
+            `
+            insert into producao 
+                (
+                    id_produto, 
+                    data, 
+                    quantidade, 
+                    observacao
+                )
+            values
+                (
+                    ?, 
+                    ?, 
+                    ?, 
+                    ?
+                )`;
+
+        dbConn.beginTransaction();
+
+        await dbConn.query(sql, [productId, date, amount, observation]);
+
+        await dbConn.commit();
+
+        res.status(201).json({ message: "Nova produção adicionada." });
+    }catch(err){
+        console.log(`Endpoint: addProduction, Erro: ${err}`);
+        return res.status(500).json(err);
+    }finally{
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}

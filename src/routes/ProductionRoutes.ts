@@ -6,11 +6,13 @@ import {
     getProductionByDate,
     getProductionByAmount,
     getProductionByProductCategoryId,
-    addProduction
+    addProduction,
+    getProductionByProductCategoryName
 } from '../controllers/ProductionController.js';
 import { createNewConnection } from '../database/Db.js';
 import { TProduction } from '../types/model/Production.js';
 import { TProduct } from '../types/model/Product.js';
+import { TCategory } from '../types/model/Category.js';
 
 const router = express.Router();
 
@@ -49,6 +51,23 @@ router.get(
 
             if(query.categoryId){
                 return getProductionByProductCategoryId(req, res, await createNewConnection());
+            }
+
+            throw new Error(`Bad Request`);
+        }catch(err : any){
+            console.log(err);
+            return res.status(400).json({Message: err.message});
+        }
+    });
+
+router.get(
+    "/products/category", 
+    async (req: Request, res: Response) => {
+        try{
+            const query : TCategory = req.query as any;
+
+            if(query.name){
+                return getProductionByProductCategoryName(req, res, await createNewConnection());
             }
 
             throw new Error(`Bad Request`);

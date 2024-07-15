@@ -321,6 +321,49 @@ export const getProductionByProductCategoryId = (req, res, dbConn) => __awaiter(
         }
     }
 });
+export const getProductionByProductCategoryName = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { name } = req.query;
+        const sql = `
+            select
+                p.id,
+                json_object(
+                    'id', pr.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', pr.nome,
+                'descricao', pr.descricao,
+                'valor', pr.valor,
+                'imagem', pr.imagem 
+                ) as produto,
+                p.data,
+                p.quantidade,
+                p.observacao
+            from
+                producao p
+            join produto pr 
+                on pr.id = p.id_produto
+            join categoria c 
+                on c.id = pr.id_categoria
+            where
+                c.nome like ?
+            order by
+                pr.nome`;
+        const [data] = yield dbConn.query(sql, [`%${name}%`]);
+        return res.status(200).json(data);
+    }
+    catch (err) {
+        console.log(`Endpoint: getProductionByObservation, Erro: ${err}`);
+        return res.status(500).json(err);
+    }
+    finally {
+        if (dbConn) {
+            dbConn.end();
+        }
+    }
+});
 export const addProduction = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { productId, date, amount, observation } = req.body;

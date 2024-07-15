@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from 'express';
-import { getAllProduction, getProductionById, getProductionByProductId, getProductionByDate, getProductionByAmount, getProductionByProductCategoryId, addProduction } from '../controllers/ProductionController.js';
+import { getAllProduction, getProductionById, getProductionByProductId, getProductionByDate, getProductionByAmount, getProductionByProductCategoryId, addProduction, getProductionByProductCategoryName } from '../controllers/ProductionController.js';
 import { createNewConnection } from '../database/Db.js';
 const router = express.Router();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -41,6 +41,19 @@ router.get("/products", (req, res) => __awaiter(void 0, void 0, void 0, function
         const query = req.query;
         if (query.categoryId) {
             return getProductionByProductCategoryId(req, res, yield createNewConnection());
+        }
+        throw new Error(`Bad Request`);
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(400).json({ Message: err.message });
+    }
+}));
+router.get("/products/category", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const query = req.query;
+        if (query.name) {
+            return getProductionByProductCategoryName(req, res, yield createNewConnection());
         }
         throw new Error(`Bad Request`);
     }

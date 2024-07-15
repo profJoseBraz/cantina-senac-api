@@ -332,6 +332,51 @@ export const getProductionByProductCategoryId = async (req: Request, res: Respon
     }
 }
 
+export const getProductionByProductCategoryName = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { name } = req.query;
+
+        const sql = 
+            `
+            select
+                p.id,
+                json_object(
+                    'id', pr.id,
+                    'categoria', JSON_OBJECT(
+                        'id', c.id,
+                        'nome', c.nome
+                    ),
+                'nome', pr.nome,
+                'descricao', pr.descricao,
+                'valor', pr.valor,
+                'imagem', pr.imagem 
+                ) as produto,
+                p.data,
+                p.quantidade,
+                p.observacao
+            from
+                producao p
+            join produto pr 
+                on pr.id = p.id_produto
+            join categoria c 
+                on c.id = pr.id_categoria
+            where
+                c.nome like ?
+            order by
+                pr.nome`;
+
+        const [data] = await dbConn.query(sql, [`%${name}%`]);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`Endpoint: getProductionByObservation, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
 export const addProduction = async (req: Request, res: Response, dbConn : mysql.Connection) => {
     try{
         const {

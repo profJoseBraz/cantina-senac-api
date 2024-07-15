@@ -7,7 +7,8 @@ import {
     getProductionByAmount,
     getProductionByProductCategoryId,
     addProduction,
-    getProductionByProductCategoryName
+    getProductionByProductCategoryName,
+    getProductionByProductName
 } from '../controllers/ProductionController.js';
 import { createNewConnection } from '../database/Db.js';
 import { TProduction } from '../types/model/Production.js';
@@ -48,8 +49,10 @@ router.get(
     async (req: Request, res: Response) => {
         try{
             const query : TProduct = req.query as any;
-
-            if(query.categoryId){
+            
+            if(query.name){
+                return getProductionByProductName(req, res, await createNewConnection());
+            }else if(query.categoryId){
                 return getProductionByProductCategoryId(req, res, await createNewConnection());
             }
 

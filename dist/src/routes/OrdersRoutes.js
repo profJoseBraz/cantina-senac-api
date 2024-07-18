@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from 'express';
-import { addOrder, getAllOrders, getOrdersById, getOrdersByPaymentMethodId, getOrdersByCustomerName, getOrdersByDate } from '../controllers/OrdersController.js';
+import { addOrder, getAllOrders, getOrdersById, getOrdersByPaymentMethodId, getOrdersByCustomerName, getOrdersByDate, getOrdersByPaymentMethodName } from '../controllers/OrdersController.js';
 import { createNewConnection } from '../database/Db.js';
 const router = express.Router();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,6 +28,19 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         else if (query.date) {
             return getOrdersByDate(req, res, yield createNewConnection());
+        }
+        throw new Error(`Bad Request`);
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(400).json({ Message: err.message });
+    }
+}));
+router.get("/paymentMethod", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const query = req.query;
+        if (query.name) {
+            return getOrdersByPaymentMethodName(req, res, yield createNewConnection());
         }
         throw new Error(`Bad Request`);
     }

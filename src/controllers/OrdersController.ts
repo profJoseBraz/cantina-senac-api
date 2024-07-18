@@ -180,6 +180,40 @@ export const getOrdersByDate = async (req: Request, res: Response, dbConn : mysq
     }
 }
 
+export const getOrdersByPaymentMethodName = async (req: Request, res: Response, dbConn : mysql.Connection) : Promise<Response> => {
+    try {
+        const { name } = req.query;
+
+        const sql = 
+            `
+            select 
+                p.id,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
+                p.nome_cliente,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora
+            from 
+                pedido p
+            join forma_pagamento fp 
+                on fp.id = p.id_forma_pagamento
+            where
+                fp.nome like ?`;
+
+        const [data] = await dbConn.query(sql, [`%${name}%`]);
+        return res.status(200).json(data);
+    } catch (err) {
+        console.log(`End point: getOrdersByCustomerName, Erro: ${err}`);
+        return res.status(500).json(err);
+    } finally {
+        if(dbConn){
+            dbConn.end();
+        }
+    }
+}
+
 export const addOrder = async (req: Request, res: Response, dbConn : mysql.Connection) => {
     try{
         const { 

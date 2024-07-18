@@ -175,6 +175,38 @@ export const getOrdersByDate = (req, res, dbConn) => __awaiter(void 0, void 0, v
         }
     }
 });
+export const getOrdersByPaymentMethodName = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { name } = req.query;
+        const sql = `
+            select 
+                p.id,
+                json_object(
+                    'id', fp.id, 
+                    'nome', fp.nome
+                ) as forma_pagamento,
+                p.nome_cliente,
+                date_format(date(p.data), '%d/%m/%Y') as data,
+                time(p.data) as hora
+            from 
+                pedido p
+            join forma_pagamento fp 
+                on fp.id = p.id_forma_pagamento
+            where
+                fp.nome like ?`;
+        const [data] = yield dbConn.query(sql, [`%${name}%`]);
+        return res.status(200).json(data);
+    }
+    catch (err) {
+        console.log(`End point: getOrdersByCustomerName, Erro: ${err}`);
+        return res.status(500).json(err);
+    }
+    finally {
+        if (dbConn) {
+            dbConn.end();
+        }
+    }
+});
 export const addOrder = (req, res, dbConn) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { paymentMethodId, customerName } = req.body;
